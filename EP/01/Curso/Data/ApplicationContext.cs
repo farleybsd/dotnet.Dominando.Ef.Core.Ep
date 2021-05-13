@@ -1,9 +1,9 @@
-﻿using DominandoEfCore.Domain;
+using System;
+using Curso.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
 
-namespace DominandoEfCore.Data
+namespace Curso.Data
 {
     public class ApplicationContext : DbContext
     {
@@ -12,10 +12,11 @@ namespace DominandoEfCore.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            const string strConnection = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=C002;Integrated Security=True;pooling=true";
+            const string strConnection="Data source=(localdb)\\mssqllocaldb; Initial Catalog=C002;Integrated Security=true;pooling=true;";
             optionsBuilder
                 .UseSqlServer(strConnection)
                 .EnableSensitiveDataLogging()
+                //.UseLazyLoadingProxies()
                 .LogTo(Console.WriteLine, LogLevel.Information);
         }
     }
