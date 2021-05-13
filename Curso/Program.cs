@@ -1,7 +1,9 @@
 ﻿using DominandoEfCore.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
+using System.Linq;
 
 namespace DominandoEfCore
 {
@@ -10,7 +12,8 @@ namespace DominandoEfCore
         static void Main(string[] args)
         {
             //EnsureDeleted();
-            GapEnsureCreated();
+            //GapEnsureCreated();
+            HealthCheckBancoDados();
             Console.ReadKey();
         }
         // Se o banco nao exister ele cria
@@ -38,6 +41,37 @@ namespace DominandoEfCore
 
             var databaseCretador = db2.GetService<IRelationalDatabaseCreator>();
             databaseCretador.CreateTables();
+        }
+        //Checando o Banco de Dados se esta On
+        static void HealthCheckBancoDados()
+        {
+            using var db = new ApplicationContext();
+            var canConnect = db.Database.CanConnect();
+
+            if (canConnect)
+            {
+                Console.WriteLine("Posso Me connectar");
+            }
+            else
+            {
+                Console.WriteLine("Nao Posso Me connectar");
+            }
+            //try
+            //{
+            //    // Poder Usar a forma 1 ou a dois
+
+            //    //1 Forma mais usada
+            //    var conection = db.Database.GetDbConnection();
+            //    conection.Open();
+            //    //2 Forma  menos usada
+            //    db.Departamentos.Any();
+            //    Console.WriteLine("Posso Me connectar");
+            //}
+            //catch (Exception)
+            //{
+
+            //    Console.WriteLine("Nao Posso Me connectar");
+            //}
         }
     }
 }
