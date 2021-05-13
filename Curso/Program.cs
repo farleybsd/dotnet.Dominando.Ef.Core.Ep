@@ -1,4 +1,6 @@
 ﻿using DominandoEfCore.Data;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 
 namespace DominandoEfCore
@@ -7,7 +9,8 @@ namespace DominandoEfCore
     {
         static void Main(string[] args)
         {
-            EnsureDeleted();
+            //EnsureDeleted();
+            GapEnsureCreated();
             Console.ReadKey();
         }
         // Se o banco nao exister ele cria
@@ -22,6 +25,19 @@ namespace DominandoEfCore
         {
             using var db = new ApplicationContext();
             db.Database.EnsureDeleted();
+        }
+
+        //Criando tabela de um outro contexto em um outro banco
+        static void GapEnsureCreated()
+        {
+            using var db1 = new ApplicationContext();
+            using var db2 = new ApplicationContextCidade();
+
+            db1.Database.EnsureCreated();
+            db2.Database.EnsureCreated();
+
+            var databaseCretador = db2.GetService<IRelationalDatabaseCreator>();
+            databaseCretador.CreateTables();
         }
     }
 }
