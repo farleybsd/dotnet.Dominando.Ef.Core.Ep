@@ -1,0 +1,8 @@
+1 - Criando o primeiro projeto
+dotnet new console -o Curso -n DominandoEfCore -f net5
+
+2 - Instalando o Driver do Sql Sever para Entity Framework Core
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 5.0.0
+
+3 - Instalando pacote de Log
+dotnet add package Microsoft.Extensions.Logging.console --version 5.0.0
