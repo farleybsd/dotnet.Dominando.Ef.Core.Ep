@@ -13,7 +13,11 @@ namespace DominandoEfCore
         {
             //EnsureDeleted();
             //GapEnsureCreated();
-            HealthCheckBancoDados();
+            //HealthCheckBancoDados();
+            _count = 0;
+            GerenciarEstadoDaConexao(false);
+            _count = 0;
+            GerenciarEstadoDaConexao(true);
             Console.ReadKey();
         }
         // Se o banco nao exister ele cria
@@ -72,6 +76,31 @@ namespace DominandoEfCore
 
             //    Console.WriteLine("Nao Posso Me connectar");
             //}
+        }
+
+        static int _count;
+        static void GerenciarEstadoDaConexao(bool gerenciarEstadoConexao)
+        {
+            using var db = new ApplicationContext();
+            var time = System.Diagnostics.Stopwatch.StartNew();
+
+            var conexao = db.Database.GetDbConnection();
+
+            conexao.StateChange += (_, ____) => ++_count;
+
+            if (gerenciarEstadoConexao)
+            {
+                conexao.Open();
+            }
+
+            for (var i = 0; i < 200; i++)
+            {
+                db.Departamentos.AsNoTracking().Any();
+            }
+
+            time.Stop();
+            var mensagem = $"Tempo:{time.Elapsed.ToString()},{gerenciarEstadoConexao}, Contador : {_count}";
+            Console.WriteLine(mensagem);
         }
     }
 }
