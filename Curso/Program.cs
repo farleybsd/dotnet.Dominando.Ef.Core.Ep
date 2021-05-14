@@ -25,7 +25,8 @@ namespace DominandoEfCore
             //MigracoesPedentes();
             //AplicarMigracaEmTempodeExecucao();
             //TodasMigracoes();
-            MigracoesJaAplicadas();
+            //MigracoesJaAplicadas();
+            ScriptGeralBancoDeDados();
             Console.ReadKey();
         }
         // Se o banco nao exister ele cria
@@ -199,6 +200,14 @@ namespace DominandoEfCore
             {
                 Console.WriteLine($"Migração:{migracao}");
             }
+        }
+        static void ScriptGeralBancoDeDados()
+        {
+            using var db = new ApplicationContext();
+
+            var script = db.Database.GenerateCreateScript();
+
+            Console.WriteLine(script);
         }
 
     }
