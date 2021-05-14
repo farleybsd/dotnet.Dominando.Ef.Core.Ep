@@ -15,12 +15,15 @@ namespace DominandoEfCore
             //EnsureDeleted();
             //GapEnsureCreated();
             //HealthCheckBancoDados();
+
             //_count = 0;
             //GerenciarEstadoDaConexao(false);
             //_count = 0;
             //GerenciarEstadoDaConexao(true);
+
             //SqlInjection();
-            MigracoesPedentes();
+            //MigracoesPedentes();
+            AplicarMigracaEmTempodeExecucao();
             Console.ReadKey();
         }
         // Se o banco nao exister ele cria
@@ -166,6 +169,12 @@ namespace DominandoEfCore
             {
                 Console.WriteLine($"Migracao:{migracao}");
             }
+        }
+
+        static void AplicarMigracaEmTempodeExecucao()
+        {
+            using var db = new ApplicationContext();
+            db.Database.Migrate();
         }
     }
 }

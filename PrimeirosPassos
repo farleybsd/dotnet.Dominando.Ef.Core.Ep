@@ -15,3 +15,6 @@ dotnet tool uninstall --global dotnet-ef
 dotnet tool install --global dotnet-ef --version 5.0.0
 -- Gerando Migracoes
 dotnet ef migrations add initial --context ApplicationContext
+
+5 - Deletando uma DataBase pelo EntityFrameworkCore
+dotnet ef dataBase drop  --context ApplicationContext
