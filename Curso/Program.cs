@@ -1,4 +1,5 @@
 ﻿using DominandoEfCore.Data;
+using DominandoEfCore.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -18,7 +19,7 @@ namespace DominandoEfCore
             //GerenciarEstadoDaConexao(false);
             //_count = 0;
             //GerenciarEstadoDaConexao(true);
-
+            SqlInjection();
             Console.ReadKey();
         }
         // Se o banco nao exister ele cria
@@ -121,6 +122,35 @@ namespace DominandoEfCore
 
             // Terceira Opcao
             db.Database.ExecuteSqlInterpolated($"update departamentos set descricao={0} where id=1");
+        }
+
+        static void SqlInjection()
+        {
+            using var db = new ApplicationContext();
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
+            db.Departamentos.AddRange(
+
+                new Departamento()
+                {
+                    Descricao = "Departamento 01"
+                },
+                new Departamento()
+                {
+                    Descricao = "Departamento 02"
+                }
+            );
+
+            db.SaveChanges();
+
+            var descricao = "Teste ' or 1='1";
+            //db.Database.ExecuteSqlRaw("update departamentos set descricao='AtaqueSqlInjection' where descricao={0}",descricao);
+            db.Database.ExecuteSqlRaw($"update departamentos set descricao='AtaqueSqlInjection' where descricao='{descricao}'");
+            foreach (var departamento in db.Departamentos.AsNoTracking())
+            {
+                Console.WriteLine($"Id:{departamento.Id}, Descricao:{departamento.Descricao}");
+            }
         }
     }
 }
