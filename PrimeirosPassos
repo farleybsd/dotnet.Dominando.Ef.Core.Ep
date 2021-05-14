@@ -18,3 +18,9 @@ dotnet ef migrations add initial --context ApplicationContext
 
 5 - Deletando uma DataBase pelo EntityFrameworkCore
 dotnet ef dataBase drop  --context ApplicationContext
+
+6 - Recuperando migrations execultada  na base de dados
+1°- dotnet ef migrations list --context ApplicationContext
+
+ 7 - Gravando uma migracao no banco de dados
+ dotnet ef dataBase update --context ApplicationContext
