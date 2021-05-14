@@ -23,7 +23,8 @@ namespace DominandoEfCore
 
             //SqlInjection();
             //MigracoesPedentes();
-            AplicarMigracaEmTempodeExecucao();
+            //AplicarMigracaEmTempodeExecucao();
+            TodasMigracoes();
             Console.ReadKey();
         }
         // Se o banco nao exister ele cria
@@ -175,6 +176,17 @@ namespace DominandoEfCore
         {
             using var db = new ApplicationContext();
             db.Database.Migrate();
+        }
+        static void TodasMigracoes()
+        {
+            using var db = new ApplicationContext();
+            var migracoes = db.Database.GetMigrations();
+            Console.WriteLine($"Total: {migracoes.Count()}");
+
+            foreach (var migracao in migracoes)
+            {
+                Console.WriteLine($"Migração:{migracao}");
+            }
         }
     }
 }
