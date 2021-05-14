@@ -19,7 +19,8 @@ namespace DominandoEfCore
             //GerenciarEstadoDaConexao(false);
             //_count = 0;
             //GerenciarEstadoDaConexao(true);
-            SqlInjection();
+            //SqlInjection();
+            MigracoesPedentes();
             Console.ReadKey();
         }
         // Se o banco nao exister ele cria
@@ -150,6 +151,20 @@ namespace DominandoEfCore
             foreach (var departamento in db.Departamentos.AsNoTracking())
             {
                 Console.WriteLine($"Id:{departamento.Id}, Descricao:{departamento.Descricao}");
+            }
+        }
+
+        static void MigracoesPedentes()
+        {
+            using var db = new ApplicationContext();
+
+            var migracoesPedentes = db.Database.GetPendingMigrations();
+
+            Console.WriteLine($"Total : {migracoesPedentes.Count()}");
+
+            foreach (var migracao in migracoesPedentes)
+            {
+                Console.WriteLine($"Migracao:{migracao}");
             }
         }
     }

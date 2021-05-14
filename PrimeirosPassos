@@ -6,3 +6,12 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 5.0.0
 
 3 - Instalando pacote de Log
 dotnet add package Microsoft.Extensions.Logging.console --version 5.0.0
+
+4 - Migracoes
+dotnet add package Microsoft.EntityFrameworkCore.Design --version 5.0.0
+-- remover 
+dotnet tool uninstall --global dotnet-ef
+-- install
+dotnet tool install --global dotnet-ef --version 5.0.0
+-- Gerando Migracoes
+dotnet ef migrations add initial --context ApplicationContext

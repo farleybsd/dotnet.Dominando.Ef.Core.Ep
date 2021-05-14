@@ -65,3 +65,5 @@ C:\MyGith\dotnet.Dominando.Ef.Core.Ep\Curso\obj\Debug\net5.0\DominandoEfCore.dll
 C:\MyGith\dotnet.Dominando.Ef.Core.Ep\Curso\obj\Debug\net5.0\ref\DominandoEfCore.dll
 C:\MyGith\dotnet.Dominando.Ef.Core.Ep\Curso\obj\Debug\net5.0\DominandoEfCore.pdb
 C:\MyGith\dotnet.Dominando.Ef.Core.Ep\Curso\obj\Debug\net5.0\DominandoEfCore.genruntimeconfig.cache
+C:\MyGith\dotnet.Dominando.Ef.Core.Ep\Curso\bin\Debug\net5.0\Humanizer.dll
+C:\MyGith\dotnet.Dominando.Ef.Core.Ep\Curso\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Design.dll
