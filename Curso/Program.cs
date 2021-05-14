@@ -14,10 +14,11 @@ namespace DominandoEfCore
             //EnsureDeleted();
             //GapEnsureCreated();
             //HealthCheckBancoDados();
-            _count = 0;
-            GerenciarEstadoDaConexao(false);
-            _count = 0;
-            GerenciarEstadoDaConexao(true);
+            //_count = 0;
+            //GerenciarEstadoDaConexao(false);
+            //_count = 0;
+            //GerenciarEstadoDaConexao(true);
+
             Console.ReadKey();
         }
         // Se o banco nao exister ele cria
@@ -101,6 +102,25 @@ namespace DominandoEfCore
             time.Stop();
             var mensagem = $"Tempo:{time.Elapsed.ToString()},{gerenciarEstadoConexao}, Contador : {_count}";
             Console.WriteLine(mensagem);
+        }
+
+        static void ExeculteSql()
+        {
+            using var db = new ApplicationContext();
+
+            //Primeira Opcao
+            using (var cmd = db.Database.GetDbConnection().CreateCommand())
+            {
+                cmd.CommandText = "Select 1";
+                cmd.ExecuteNonQuery();
+            }
+
+            // Segunda Opcao evita sql injection
+            var descricao = "TESTE";
+            db.Database.ExecuteSqlRaw("update departamentos set descricao={0} where id=1",descricao);
+
+            // Terceira Opcao
+            db.Database.ExecuteSqlInterpolated($"update departamentos set descricao={0} where id=1");
         }
     }
 }
