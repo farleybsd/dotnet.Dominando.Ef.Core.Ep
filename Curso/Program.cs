@@ -26,7 +26,8 @@ namespace DominandoEfCore
             //AplicarMigracaEmTempodeExecucao();
             //TodasMigracoes();
             //MigracoesJaAplicadas();
-            ScriptGeralBancoDeDados();
+            //ScriptGeralBancoDeDados();
+            CarregamentoAdiantado();
             Console.ReadKey();
         }
         // Se o banco nao exister ele cria
@@ -208,6 +209,78 @@ namespace DominandoEfCore
             var script = db.Database.GenerateCreateScript();
 
             Console.WriteLine(script);
+        }
+        static void CarregamentoAdiantado()
+        {
+            
+            using var db = new ApplicationContext();
+
+            SetupTiposCarregamentos(db);
+            // Forcar o relacionamento e execultar a consulta de uma vez
+            // unir as tabelas em tempo de execucao
+            //obs com muitos campos ele pode dar lentidao
+            var departamentos = db
+                .Departamentos
+                .Include(p => p.Funcionarios);
+
+            foreach (var departamento in departamentos)
+            {
+                Console.WriteLine("--------------------------");
+                Console.WriteLine($"Departamento: {departamento.Descricao}");
+                if (departamento.Funcionarios?.Any() ?? false)
+                {
+                    foreach (var funcionario in departamento.Funcionarios)
+                    {
+                        Console.WriteLine($"\tFuncionario:{funcionario.Nome}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"\t Nenhum funcionario encontrado!");
+                }
+            }
+        }
+        static void SetupTiposCarregamentos(ApplicationContext db)
+        {
+            if (!db.Departamentos.Any())
+            {
+                db.Departamentos.AddRange(
+                    new Departamento
+                    {
+                        Descricao = "Departamento 01",
+                        Funcionarios = new System.Collections.Generic.List<Funcionario>
+                        {
+                            new Funcionario
+                            {
+                                Nome = "Rafael Almeida",
+                                Cpf = "99999999911",
+                                Rg= "2100062"
+                            }
+                        }
+                    },
+                    new Departamento
+                    {
+                        Descricao = "Departamento 02",
+                        Funcionarios = new System.Collections.Generic.List<Funcionario>
+                        {
+                            new Funcionario
+                            {
+                                Nome = "Bruno Brito",
+                                Cpf = "88888888811",
+                                Rg= "3100062"
+                            },
+                            new Funcionario
+                            {
+                                Nome = "Eduardo Pires",
+                                Cpf = "77777777711",
+                                Rg= "1100062"
+                            }
+                        }
+                    });
+
+                db.SaveChanges();
+                db.ChangeTracker.Clear();
+            }
         }
 
     }
