@@ -27,7 +27,8 @@ namespace DominandoEfCore
             //TodasMigracoes();
             //MigracoesJaAplicadas();
             //ScriptGeralBancoDeDados();
-            CarregamentoAdiantado();
+            //CarregamentoAdiantado();
+            CarregamentoExplicito();
             Console.ReadKey();
         }
         // Se o banco nao exister ele cria
@@ -280,6 +281,44 @@ namespace DominandoEfCore
 
                 db.SaveChanges();
                 db.ChangeTracker.Clear();
+            }
+        }
+        static void CarregamentoExplicito()
+        {
+            // Os dados relacionados sao explicitamente carregado  no banco de dado
+            // em um momento posterior ou seja departameto e funcionario trazer os funcionarios
+            // quando  for solicitado.
+            using var db = new ApplicationContext();
+
+            SetupTiposCarregamentos(db);
+            
+            var departamentos = db
+                .Departamentos
+                .ToList();
+
+            foreach (var departamento in departamentos)
+            {
+                if (departamento.Id ==2)
+                {
+                    //Exemplo carregamento explicito 1
+                    //db.Entry(departamento).Collection(p=> p.Funcionarios).Load(); // mapenado o q sera carregado no sql
+
+                    //Exemplo carregamento explicito 2
+                    db.Entry(departamento).Collection(p => p.Funcionarios).Query().Where(p => p.Id > 2).ToList();
+                }
+                Console.WriteLine("--------------------------");
+                Console.WriteLine($"Departamento: {departamento.Descricao}");
+                if (departamento.Funcionarios?.Any() ?? false)
+                {
+                    foreach (var funcionario in departamento.Funcionarios)
+                    {
+                        Console.WriteLine($"\tFuncionario:{funcionario.Nome}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"\t Nenhum funcionario encontrado!");
+                }
             }
         }
 
