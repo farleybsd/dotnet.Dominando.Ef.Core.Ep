@@ -28,7 +28,8 @@ namespace DominandoEfCore
             //MigracoesJaAplicadas();
             //ScriptGeralBancoDeDados();
             //CarregamentoAdiantado();
-            CarregamentoExplicito();
+            //CarregamentoExplicito();
+            CarregamentoLento();
             Console.ReadKey();
         }
         // Se o banco nao exister ele cria
@@ -306,6 +307,37 @@ namespace DominandoEfCore
                     //Exemplo carregamento explicito 2
                     db.Entry(departamento).Collection(p => p.Funcionarios).Query().Where(p => p.Id > 2).ToList();
                 }
+                Console.WriteLine("--------------------------");
+                Console.WriteLine($"Departamento: {departamento.Descricao}");
+                if (departamento.Funcionarios?.Any() ?? false)
+                {
+                    foreach (var funcionario in departamento.Funcionarios)
+                    {
+                        Console.WriteLine($"\tFuncionario:{funcionario.Nome}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"\t Nenhum funcionario encontrado!");
+                }
+            }
+        }
+        static void CarregamentoLento()
+        {
+            // nao recomedado o CarregamentoLento
+            using var db = new ApplicationContext();
+
+            SetupTiposCarregamentos(db);
+
+            //db.ChangeTracker.LazyLoadingEnabled = false; // disable o loadlazy de uma consula
+
+            var departamentos = db
+                .Departamentos
+                .ToList();
+
+            foreach (var departamento in departamentos)
+            {
+                
                 Console.WriteLine("--------------------------");
                 Console.WriteLine($"Departamento: {departamento.Descricao}");
                 if (departamento.Funcionarios?.Any() ?? false)

@@ -8,6 +8,6 @@
         public string Rg { get; set; }
 
         public int DepartamentoId { get; set; }
-        public Departamento Departamento { get; set; }
+        public virtual Departamento Departamento { get; set; } // virtual e para  usar o load lazy entity
     }
 }

@@ -24,3 +24,6 @@ dotnet ef dataBase drop  --context ApplicationContext
 
  7 - Gravando uma migracao no banco de dados
  dotnet ef dataBase update --context ApplicationContext
+
+ 8 - Carregamento Lento Lazzy Load
+ dotnet add package Microsoft.EntityFrameworkCore.Proxies --version 5.0.0
