@@ -1,5 +1,6 @@
 ﻿using Dotnet.EfCore.Consultas.Data;
 using Dotnet.EfCore.Consultas.Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
@@ -9,7 +10,8 @@ namespace Dotnet.EfCore.Consultas
     {
         static void Main(string[] args)
         {
-            FiltroGlobal();
+            //FiltroGlobal();
+            IgnoreFiltroGlobal();
             Console.ReadKey();
 
         }
@@ -21,6 +23,19 @@ namespace Dotnet.EfCore.Consultas
 
             var departamentos = db.Departamentos.Where(p => p.Id > 0).ToList();
 
+            foreach (var departamento in departamentos)
+            {
+                Console.WriteLine($"Descricao:{departamento.Descricao} \t Excluido: {departamento.Excluido}");
+            }
+        }
+
+        static void IgnoreFiltroGlobal()
+        {
+            using var db = new ApplicationContext();
+            Setup(db);
+
+            var departamentos = db.Departamentos.IgnoreQueryFilters().Where(p => p.Id > 0).ToList();
+                   
             foreach (var departamento in departamentos)
             {
                 Console.WriteLine($"Descricao:{departamento.Descricao} \t Excluido: {departamento.Excluido}");
