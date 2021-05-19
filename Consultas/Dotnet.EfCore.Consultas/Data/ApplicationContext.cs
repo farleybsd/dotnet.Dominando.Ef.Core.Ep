@@ -21,7 +21,7 @@ namespace Dotnet.EfCore.Consultas.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Filtro global em uma tabela
-            modelBuilder.Entity<Departamento>().HasQueryFilter(p => !p.Excluido);
+            //modelBuilder.Entity<Departamento>().HasQueryFilter(p => !p.Excluido);
         }
     }
 }

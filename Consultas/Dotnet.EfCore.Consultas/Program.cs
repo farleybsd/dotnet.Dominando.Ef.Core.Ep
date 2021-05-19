@@ -11,7 +11,8 @@ namespace Dotnet.EfCore.Consultas
         static void Main(string[] args)
         {
             //FiltroGlobal();
-            IgnoreFiltroGlobal();
+            //IgnoreFiltroGlobal();
+            ConsultaProjetada();
             Console.ReadKey();
 
         }
@@ -39,6 +40,31 @@ namespace Dotnet.EfCore.Consultas
             foreach (var departamento in departamentos)
             {
                 Console.WriteLine($"Descricao:{departamento.Descricao} \t Excluido: {departamento.Excluido}");
+            }
+        }
+        static void ConsultaProjetada()
+        {
+            using var db = new ApplicationContext();
+            Setup(db);
+
+            var departamentos = db.Departamentos
+                .Where(p => p.Id > 0)
+                .Select(p=> 
+                new 
+                { 
+                    p.Descricao,
+                    Funcionarios = p.Funcionarios.Select(f => new {f.Nome })
+                })
+                .ToList();
+
+            foreach (var departamento in departamentos)
+            {
+                Console.WriteLine($"Descricao:{departamento.Descricao}");
+                
+                foreach (var funcionario in departamento.Funcionarios)
+                {
+                    Console.WriteLine($"\t Nome:{funcionario.Nome}");
+                }
             }
         }
         static void Setup(ApplicationContext db)
