@@ -1,5 +1,6 @@
 ﻿using Dotnet.EfCore.Consultas.Data;
 using Dotnet.EfCore.Consultas.Domain;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -12,7 +13,8 @@ namespace Dotnet.EfCore.Consultas
         {
             //FiltroGlobal();
             //IgnoreFiltroGlobal();
-            ConsultaProjetada();
+            //ConsultaProjetada();
+            ConsultaParametrizada();
             Console.ReadKey();
 
         }
@@ -65,6 +67,26 @@ namespace Dotnet.EfCore.Consultas
                 {
                     Console.WriteLine($"\t Nome:{funcionario.Nome}");
                 }
+            }
+        }
+        static void ConsultaParametrizada()
+        {
+            using var db = new ApplicationContext();
+            Setup(db);
+            var id =  new SqlParameter
+            { 
+                Value =1,
+                SqlDbType = System.Data.SqlDbType.Int
+            };
+            var departamentos = db.Departamentos
+                .FromSqlRaw("Select * from Departamentos with(NOLOCK) where id >{0}",id)
+                .Where(p=> !p.Excluido)
+                .ToList();
+
+            foreach (var departamento in departamentos)
+            {
+                Console.WriteLine($"Descricao:{departamento.Descricao}");
+                
             }
         }
         static void Setup(ApplicationContext db)
