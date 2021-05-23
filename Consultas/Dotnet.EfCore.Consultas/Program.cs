@@ -19,7 +19,8 @@ namespace Dotnet.EfCore.Consultas
             //ConsultaComTag();
             //EntendendoConsulta1N1N1();
             //DivisaoDeConsultas();
-            CriarStoredProcedure();
+            //CriarStoredProcedure();
+            InserirDadosViaProcedure();
             Console.ReadKey();
 
         }
@@ -201,6 +202,13 @@ namespace Dotnet.EfCore.Consultas
 
             using var db = new ApplicationContext();
             db.Database.ExecuteSqlRaw(criarDepartamento);
+            Console.WriteLine("Criado com Sucesso");
+        }
+        static void InserirDadosViaProcedure()
+        {
+            using var db = new ApplicationContext();
+
+            db.Database.ExecuteSqlRaw("execute CriarDepartamento @p0,@p1","Departamento Via Procedure",true);
             Console.WriteLine("Criado com Sucesso");
         }
         static void Setup(ApplicationContext db)
