@@ -18,7 +18,8 @@ namespace Dotnet.EfCore.Consultas
             //ConsultaInterpolada();
             //ConsultaComTag();
             //EntendendoConsulta1N1N1();
-            DivisaoDeConsultas();
+            //DivisaoDeConsultas();
+            CriarStoredProcedure();
             Console.ReadKey();
 
         }
@@ -181,6 +182,26 @@ namespace Dotnet.EfCore.Consultas
                     Console.WriteLine($"\tNome: {funcionario.Nome}");
                 }
             }
+        }
+        static void CriarStoredProcedure()
+        {
+            var criarDepartamento = @"
+
+            CREATE OR ALTER PROCEDURE CriarDepartamento
+                @Descricao VARCHAR(50),
+                @Ativo bit
+            as
+               BEGIN
+                INSERT INTO
+                    Departamentos(Descricao,Ativo,Excluido)
+                VALUES(@Descricao,@Ativo,0)
+            END
+
+            ";
+
+            using var db = new ApplicationContext();
+            db.Database.ExecuteSqlRaw(criarDepartamento);
+            Console.WriteLine("Criado com Sucesso");
         }
         static void Setup(ApplicationContext db)
         {
