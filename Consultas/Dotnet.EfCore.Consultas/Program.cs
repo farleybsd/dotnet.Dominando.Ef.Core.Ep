@@ -17,7 +17,8 @@ namespace Dotnet.EfCore.Consultas
             //ConsultaParametrizada();
             //ConsultaInterpolada();
             //ConsultaComTag();
-            EntendendoConsulta1N1N1();
+            //EntendendoConsulta1N1N1();
+            DivisaoDeConsultas();
             Console.ReadKey();
 
         }
@@ -158,6 +159,28 @@ namespace Dotnet.EfCore.Consultas
                 }
             }
             */
+        }
+        static void DivisaoDeConsultas()
+        {
+            // Dados Duplicados
+            using var db = new ApplicationContext();
+            Setup(db);
+
+            var departamentos = db.Departamentos
+                .Include(p => p.Funcionarios)
+                .Where(p => p.Id < 3)
+                //.AsSplitQuery()
+                .AsSingleQuery()// ignorar o AsSplitQuery
+                .ToList();
+
+            foreach (var departamento in departamentos)
+            {
+                Console.WriteLine($"Descricao: {departamento.Descricao}");
+                foreach (var funcionario in departamento.Funcionarios)
+                {
+                    Console.WriteLine($"\tNome: {funcionario.Nome}");
+                }
+            }
         }
         static void Setup(ApplicationContext db)
         {
