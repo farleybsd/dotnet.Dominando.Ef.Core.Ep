@@ -16,7 +16,8 @@ namespace Dotnet.EfCore.Consultas
             //ConsultaProjetada();
             //ConsultaParametrizada();
             //ConsultaInterpolada();
-            ConsultaComTag();
+            //ConsultaComTag();
+            EntendendoConsulta1N1N1();
             Console.ReadKey();
 
         }
@@ -40,7 +41,7 @@ namespace Dotnet.EfCore.Consultas
             Setup(db);
 
             var departamentos = db.Departamentos.IgnoreQueryFilters().Where(p => p.Id > 0).ToList();
-                   
+
             foreach (var departamento in departamentos)
             {
                 Console.WriteLine($"Descricao:{departamento.Descricao} \t Excluido: {departamento.Excluido}");
@@ -53,18 +54,18 @@ namespace Dotnet.EfCore.Consultas
 
             var departamentos = db.Departamentos
                 .Where(p => p.Id > 0)
-                .Select(p=> 
-                new 
-                { 
+                .Select(p =>
+                new
+                {
                     p.Descricao,
-                    Funcionarios = p.Funcionarios.Select(f => new {f.Nome })
+                    Funcionarios = p.Funcionarios.Select(f => new { f.Nome })
                 })
                 .ToList();
 
             foreach (var departamento in departamentos)
             {
                 Console.WriteLine($"Descricao:{departamento.Descricao}");
-                
+
                 foreach (var funcionario in departamento.Funcionarios)
                 {
                     Console.WriteLine($"\t Nome:{funcionario.Nome}");
@@ -75,20 +76,20 @@ namespace Dotnet.EfCore.Consultas
         {
             using var db = new ApplicationContext();
             Setup(db);
-            var id =  new SqlParameter
-            { 
-                Value =1,
+            var id = new SqlParameter
+            {
+                Value = 1,
                 SqlDbType = System.Data.SqlDbType.Int
             };
             var departamentos = db.Departamentos
-                .FromSqlRaw("Select * from Departamentos with(NOLOCK) where id >{0}",id)
-                .Where(p=> !p.Excluido)
+                .FromSqlRaw("Select * from Departamentos with(NOLOCK) where id >{0}", id)
+                .Where(p => !p.Excluido)
                 .ToList();
 
             foreach (var departamento in departamentos)
             {
                 Console.WriteLine($"Descricao:{departamento.Descricao}");
-                
+
             }
         }
         static void ConsultaInterpolada()
@@ -96,7 +97,7 @@ namespace Dotnet.EfCore.Consultas
             using var db = new ApplicationContext();
             Setup(db);
             var id = 1;
-            
+
             var departamentos = db.Departamentos
                 .FromSqlInterpolated($"Select * from Departamentos with(NOLOCK) where id >{id}") // faz a transformacao para um DB parameeter
                 .ToList();
@@ -111,7 +112,7 @@ namespace Dotnet.EfCore.Consultas
         {
             using var db = new ApplicationContext();
             Setup(db);
-            
+
 
             var departamentos = db.Departamentos
                 .TagWith(@"Estou enviando um comentario para o servidor
@@ -124,6 +125,39 @@ namespace Dotnet.EfCore.Consultas
                 Console.WriteLine($"Descricao:{departamento.Descricao}");
 
             }
+        }
+        static void EntendendoConsulta1N1N1()
+        {
+            using var db = new ApplicationContext();
+            Setup(db);
+
+            var funcionarios = db.Funcionarios
+              .Include(p => p.Departamento)
+              .ToList();
+
+
+            foreach (var funcionario in funcionarios)
+            {
+                Console.WriteLine($"\tNome:{funcionario.Nome} / Descricao Dep: {funcionario.Departamento.Descricao}");
+
+            }
+
+            /*
+            var departamentos = db.Departamentos
+                .Include(p => p.Funcionarios)
+                .ToList();
+
+            foreach (var departamento in departamentos)
+            {
+                Console.WriteLine($"Descricao:{departamento.Descricao}");
+
+                foreach (var funcionario in departamento.Funcionarios)
+                {
+                    Console.WriteLine($"\tNome:{funcionario.Nome}");
+
+                }
+            }
+            */
         }
         static void Setup(ApplicationContext db)
         {
