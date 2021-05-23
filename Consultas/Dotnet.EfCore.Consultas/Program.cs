@@ -21,7 +21,8 @@ namespace Dotnet.EfCore.Consultas
             //DivisaoDeConsultas();
             //CriarStoredProcedure();
             //InserirDadosViaProcedure();
-            CriarStoredProcedureDeConsulta();
+            //CriarStoredProcedureDeConsulta();
+            ConsultaViaProcedure();
             Console.ReadKey();
 
         }
@@ -227,6 +228,25 @@ namespace Dotnet.EfCore.Consultas
 
             using var db = new ApplicationContext();
             db.Database.ExecuteSqlRaw(criarDepartamento);
+            Console.WriteLine("Criado com Sucesso");
+        }
+        static void ConsultaViaProcedure()
+        {
+            using var db = new ApplicationContext();
+
+            var dep = new SqlParameter("@dep", "Departamento");
+
+            var departamentos = db.Departamentos
+                //.FromSqlRaw("EXECUTE GetDepartamentos @p0", "Departamento")
+                //.FromSqlRaw("EXECUTE GetDepartamentos @dep", dep)
+                .FromSqlInterpolated($"EXECUTE GetDepartamentos {dep}")
+                .ToList();
+
+            foreach (var departamento in departamentos)
+            {
+                Console.WriteLine(departamento.Descricao);
+            }
+
             Console.WriteLine("Criado com Sucesso");
         }
         static void Setup(ApplicationContext db)
