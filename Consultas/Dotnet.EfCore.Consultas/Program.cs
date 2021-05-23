@@ -15,7 +15,8 @@ namespace Dotnet.EfCore.Consultas
             //IgnoreFiltroGlobal();
             //ConsultaProjetada();
             //ConsultaParametrizada();
-            ConsultaInterpolada();
+            //ConsultaInterpolada();
+            ConsultaComTag();
             Console.ReadKey();
 
         }
@@ -98,6 +99,24 @@ namespace Dotnet.EfCore.Consultas
             
             var departamentos = db.Departamentos
                 .FromSqlInterpolated($"Select * from Departamentos with(NOLOCK) where id >{id}") // faz a transformacao para um DB parameeter
+                .ToList();
+
+            foreach (var departamento in departamentos)
+            {
+                Console.WriteLine($"Descricao:{departamento.Descricao}");
+
+            }
+        }
+        static void ConsultaComTag()
+        {
+            using var db = new ApplicationContext();
+            Setup(db);
+            
+
+            var departamentos = db.Departamentos
+                .TagWith(@"Estou enviando um comentario para o servidor
+                           Segundo Comentario
+                            Terceiro Comentario")
                 .ToList();
 
             foreach (var departamento in departamentos)
