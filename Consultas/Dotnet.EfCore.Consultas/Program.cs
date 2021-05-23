@@ -14,7 +14,8 @@ namespace Dotnet.EfCore.Consultas
             //FiltroGlobal();
             //IgnoreFiltroGlobal();
             //ConsultaProjetada();
-            ConsultaParametrizada();
+            //ConsultaParametrizada();
+            ConsultaInterpolada();
             Console.ReadKey();
 
         }
@@ -87,6 +88,22 @@ namespace Dotnet.EfCore.Consultas
             {
                 Console.WriteLine($"Descricao:{departamento.Descricao}");
                 
+            }
+        }
+        static void ConsultaInterpolada()
+        {
+            using var db = new ApplicationContext();
+            Setup(db);
+            var id = 1;
+            
+            var departamentos = db.Departamentos
+                .FromSqlInterpolated($"Select * from Departamentos with(NOLOCK) where id >{id}") // faz a transformacao para um DB parameeter
+                .ToList();
+
+            foreach (var departamento in departamentos)
+            {
+                Console.WriteLine($"Descricao:{departamento.Descricao}");
+
             }
         }
         static void Setup(ApplicationContext db)
