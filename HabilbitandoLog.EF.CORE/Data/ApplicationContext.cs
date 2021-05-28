@@ -1,5 +1,6 @@
 ﻿using HabilbitandoLog.EF.CORE.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
 using System;
 
@@ -16,7 +17,12 @@ namespace HabilbitandoLog.EF.CORE.Data
 
             optionsBuilder
                 .UseSqlServer(strConnection)
-                .LogTo(Console.WriteLine,LogLevel.Information); // coletando os log do ef no console
+                .LogTo(Console.WriteLine,
+                new[] {CoreEventId.ContextInitialized,RelationalEventId.CommandExecuted },
+                LogLevel.Information,
+                DbContextLoggerOptions.LocalTime | DbContextLoggerOptions.SingleLine
+                );
+                //.LogTo(Console.WriteLine,LogLevel.Information); // coletando os log do ef no console
                 
                 
                
