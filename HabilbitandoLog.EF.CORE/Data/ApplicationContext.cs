@@ -19,7 +19,8 @@ namespace HabilbitandoLog.EF.CORE.Data
 
             optionsBuilder
                 .UseSqlServer(strConnection)
-                .LogTo(writer.WriteLine,LogLevel.Information);
+                .EnableDetailedErrors(); // habilitando logs detalhados
+               // .LogTo(writer.WriteLine,LogLevel.Information); // escrevendo log em arquivo
                 /*
                 .LogTo(Console.WriteLine,
                 new[] {CoreEventId.ContextInitialized,RelationalEventId.CommandExecuted },
@@ -31,7 +32,7 @@ namespace HabilbitandoLog.EF.CORE.Data
                 
                
         }
-        public override void Dispose()
+        public override void Dispose() // escrevendo log em arquivo
         {
             base.Dispose();
             writer.Dispose();
