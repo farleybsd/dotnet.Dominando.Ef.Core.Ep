@@ -18,15 +18,15 @@ namespace HabilbitandoLog.EF.CORE.Data
             const string strConnection = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=DevIo-02;Integrated Security=True;pooling=true";
 
             optionsBuilder
-                .UseSqlServer(strConnection)
+                .UseSqlServer(strConnection,o=>o.MaxBatchSize(100)) // quantidade de registro que o banco ira quebrar por vez para realizar um inert
+
                 //.EnableDetailedErrors(); // habilitando logs detalhados
-                .LogTo(writer.WriteLine, LogLevel.Information) // escrevendo log em arquivo
-                /*
+                //.LogTo(writer.WriteLine, LogLevel.Information) // escrevendo log em arquivo
                 .LogTo(Console.WriteLine,
                 new[] {CoreEventId.ContextInitialized,RelationalEventId.CommandExecuted },
                 LogLevel.Information,
                 DbContextLoggerOptions.LocalTime | DbContextLoggerOptions.SingleLine
-                );*/ // pega evento por tipo de Log
+                ) // pega evento por tipo de Log
                      //.LogTo(Console.WriteLine,LogLevel.Information); // coletando os log do ef no console
                 .EnableSensitiveDataLogging(); //hablita os dadps do parametro para o EF
                 
