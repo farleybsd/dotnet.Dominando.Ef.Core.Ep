@@ -18,7 +18,7 @@ namespace HabilbitandoLog.EF.CORE.Data
             const string strConnection = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=DevIo-02;Integrated Security=True;pooling=true";
 
             optionsBuilder
-                .UseSqlServer(strConnection,o=>o.MaxBatchSize(100)) // quantidade de registro que o banco ira quebrar por vez para realizar um inert
+                .UseSqlServer(strConnection,o=>o.MaxBatchSize(100).CommandTimeout(42)) // quantidade de registro que o banco ira quebrar por vez para realizar um inert E TIME OUT GLOBAL
 
                 //.EnableDetailedErrors(); // habilitando logs detalhados
                 //.LogTo(writer.WriteLine, LogLevel.Information) // escrevendo log em arquivo

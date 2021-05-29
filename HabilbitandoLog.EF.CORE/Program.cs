@@ -1,5 +1,6 @@
 ﻿using HabilbitandoLog.EF.CORE.Data;
 using HabilbitandoLog.EF.CORE.Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
@@ -9,7 +10,8 @@ namespace HabilbitandoLog.EF.CORE
     {
         static void Main(string[] args)
         {
-            HabilitandoBatchSize();
+            TempoComandoGeral();
+            //HabilitandoBatchSize();
             //DadosSensiveis();
             //ConsultarDepartamentos();
             Console.ReadKey();
@@ -46,6 +48,12 @@ namespace HabilbitandoLog.EF.CORE
             }
 
             db.SaveChanges();
+        }
+        static void TempoComandoGeral()
+        {
+            using var db = new ApplicationContext();
+
+            db.Database.ExecuteSqlRaw("WAITFOR DELAY '00:00:07'; SELECT 1");
         }
     }
 }
