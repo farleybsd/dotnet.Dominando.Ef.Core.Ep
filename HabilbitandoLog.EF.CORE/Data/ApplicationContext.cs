@@ -23,7 +23,7 @@ namespace HabilbitandoLog.EF.CORE.Data
                                             o=>
                                             o.MaxBatchSize(100) // quantidade de registro que o banco ira quebrar por vez para realizar um inert
                                 .CommandTimeout(42) // TIME OUT GLOBAL
-                                .EnableRetryOnFailure(4,TimeSpan.FromSeconds(10),null)) //Quando alguma tentativa falhar ele ira tentar denovo
+                                .EnableRetryOnFailure(4,TimeSpan.FromSeconds(10),null)) //Quando alguma tentativa falhar ele ira tentar denovo tem q usar transaction e commit pra funcionar
 
                 //.EnableDetailedErrors(); // habilitando logs detalhados
                 //.LogTo(writer.WriteLine, LogLevel.Information) // escrevendo log em arquivo

@@ -57,5 +57,23 @@ namespace HabilbitandoLog.EF.CORE
 
             db.Database.ExecuteSqlRaw("WAITFOR DELAY '00:00:07'; SELECT 1");
         }
+
+        static void ExecultarEstrategiaResiliencia()
+        {
+            using var db = new ApplicationContext();
+
+            var strategy = db.Database.CreateExecutionStrategy();
+
+            strategy.Execute(() => {
+                using var transaction = db.Database.BeginTransaction();
+
+                db.Departamentos.Add(new Departamento() { Descricao = "Departamento Transacao" });
+
+                db.SaveChanges();
+
+                transaction.Commit();
+            });
+                       
+        }
     }
 }
