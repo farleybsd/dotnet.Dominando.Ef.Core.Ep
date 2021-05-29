@@ -19,16 +19,16 @@ namespace HabilbitandoLog.EF.CORE.Data
 
             optionsBuilder
                 .UseSqlServer(strConnection)
-                .EnableDetailedErrors(); // habilitando logs detalhados
-               // .LogTo(writer.WriteLine,LogLevel.Information); // escrevendo log em arquivo
+                //.EnableDetailedErrors(); // habilitando logs detalhados
+                .LogTo(writer.WriteLine, LogLevel.Information) // escrevendo log em arquivo
                 /*
                 .LogTo(Console.WriteLine,
                 new[] {CoreEventId.ContextInitialized,RelationalEventId.CommandExecuted },
                 LogLevel.Information,
                 DbContextLoggerOptions.LocalTime | DbContextLoggerOptions.SingleLine
                 );*/ // pega evento por tipo de Log
-                //.LogTo(Console.WriteLine,LogLevel.Information); // coletando os log do ef no console
-                
+                     //.LogTo(Console.WriteLine,LogLevel.Information); // coletando os log do ef no console
+                .EnableSensitiveDataLogging(); //hablita os dadps do parametro para o EF
                 
                
         }
