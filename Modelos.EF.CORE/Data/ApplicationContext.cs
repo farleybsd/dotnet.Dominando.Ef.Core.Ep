@@ -33,6 +33,30 @@ namespace Modelos.EF.CORE.Data
 
             // propieade especifica
             modelBuilder.Entity<Departamento>().Property(p => p.Descricao).UseCollation("SQL_Latin1_General_CP1_CS_AS"); // CASE SENSITIVE E DIFERENCIAR ACENTOS
+            
+            /*
+            Cria um objeto de sequência e especifica suas propriedades.Uma sequência
+            é um objeto associado a um esquema definido pelo usuário que gera uma 
+            sequência de valores numéricos de acordo com a especificação com a 
+            qual a sequência foi criada.A sequência de valores numéricos é gerada em 
+            ordem crescente ou decrescente em um intervalo definido e pode ser configurada 
+            para reiniciar(em um ciclo) quando se esgotar.As sequências, 
+            ao contrário de colunas de identidade, não são associadas a tabelas específicas. 
+            Os aplicativos fazem referência a um objeto de sequência para recuperar seu próximo valor. 
+            A relação entre sequências e tabelas é controlada pelo aplicativo. 
+            Os aplicativos de usuário podem referenciar um objeto de sequência e coordenar os valores 
+            nas várias linhas e tabelas. */
+
+            // Configurado uma sequence do Sql Server
+            modelBuilder.HasSequence<int>("MinhaSequencia","sequencia")
+                .StartsAt(1)       // valor inicial
+                .IncrementsBy(2)  // quantidade que vai ser adicionado
+                .HasMin(1)       // Valor minimo
+                .HasMax(10)     // valor maxio
+                .IsCyclic();   // reset a sequence para o valor minino
+
+            //Usando a sequence criada
+            modelBuilder.Entity<Departamento>().Property(p => p.Id).HasDefaultValueSql("NEXT VALUE FOR sequencia.MinhaSequencia");
         }
     }
 }
