@@ -26,6 +26,7 @@ namespace Modelos.EF.CORE.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            /*
             // Adicionano colete no banco de dados de forma global
             modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AI"); // CASE INSENSITIVE
             // RAFAEL -> rafael
@@ -33,7 +34,8 @@ namespace Modelos.EF.CORE.Data
 
             // propieade especifica
             modelBuilder.Entity<Departamento>().Property(p => p.Descricao).UseCollation("SQL_Latin1_General_CP1_CS_AS"); // CASE SENSITIVE E DIFERENCIAR ACENTOS
-            
+            */
+
             /*
             Cria um objeto de sequência e especifica suas propriedades.Uma sequência
             é um objeto associado a um esquema definido pelo usuário que gera uma 
@@ -47,6 +49,7 @@ namespace Modelos.EF.CORE.Data
             Os aplicativos de usuário podem referenciar um objeto de sequência e coordenar os valores 
             nas várias linhas e tabelas. */
 
+            /*
             // Configurado uma sequence do Sql Server
             modelBuilder.HasSequence<int>("MinhaSequencia","sequencia")
                 .StartsAt(1)       // valor inicial
@@ -57,6 +60,16 @@ namespace Modelos.EF.CORE.Data
 
             //Usando a sequence criada
             modelBuilder.Entity<Departamento>().Property(p => p.Id).HasDefaultValueSql("NEXT VALUE FOR sequencia.MinhaSequencia");
+            */
+
+            // Indices
+            modelBuilder
+                .Entity<Departamento>()
+                .HasIndex(p => new { p.Descricao, p.Ativo })
+                .HasDatabaseName("idx_meu_indice_composto") // nome do indice na base de dados
+                .HasFilter("Descricao IS NOT NULL") // filtrar o indice para deixar mais rapido a consulta
+                .HasFillFactor(80) // VALOR FATOR PREENCHIMENTO DAS PAGINAS DE DADOS E O RESTO PARA  FAZER 100% SQL SERVER GERENCIA
+                .IsUnique();// nao duplicar o indice; // indice composto de duas colunas
         }
     }
 }
