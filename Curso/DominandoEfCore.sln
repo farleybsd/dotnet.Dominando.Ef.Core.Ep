@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DominandoEfCore", "Dominand
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dotnet.EfCore.Consultas", "..\Consultas\Dotnet.EfCore.Consultas\Dotnet.EfCore.Consultas.csproj", "{A0844170-7664-4D3E-BD1E-B8DDB7652321}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HabilbitandoLog.EF.CORE", "..\HabilbitandoLog.EF.CORE\HabilbitandoLog.EF.CORE.csproj", "{A89E1FCA-BA85-4F93-B65F-8E92D6489234}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HabilbitandoLog.EF.CORE", "..\HabilbitandoLog.EF.CORE\HabilbitandoLog.EF.CORE.csproj", "{A89E1FCA-BA85-4F93-B65F-8E92D6489234}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modelos.EF.CORE", "..\Modelos.EF.CORE\Modelos.EF.CORE.csproj", "{EF53E38F-8FCC-4C16-9EDD-45B0CBA9D989}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{A89E1FCA-BA85-4F93-B65F-8E92D6489234}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A89E1FCA-BA85-4F93-B65F-8E92D6489234}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A89E1FCA-BA85-4F93-B65F-8E92D6489234}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF53E38F-8FCC-4C16-9EDD-45B0CBA9D989}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF53E38F-8FCC-4C16-9EDD-45B0CBA9D989}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF53E38F-8FCC-4C16-9EDD-45B0CBA9D989}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF53E38F-8FCC-4C16-9EDD-45B0CBA9D989}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
