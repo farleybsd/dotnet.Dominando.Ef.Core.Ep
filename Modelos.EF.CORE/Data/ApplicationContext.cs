@@ -13,6 +13,7 @@ namespace Modelos.EF.CORE.Data
     {
         public DbSet<Departamento> Departamentos { get; set; }
         public DbSet<Funcionario> Funcionarios { get; set; }
+        public DbSet<Estado> Estados { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -62,6 +63,7 @@ namespace Modelos.EF.CORE.Data
             modelBuilder.Entity<Departamento>().Property(p => p.Id).HasDefaultValueSql("NEXT VALUE FOR sequencia.MinhaSequencia");
             */
 
+            /*
             // Indices
             modelBuilder
                 .Entity<Departamento>()
@@ -70,6 +72,16 @@ namespace Modelos.EF.CORE.Data
                 .HasFilter("Descricao IS NOT NULL") // filtrar o indice para deixar mais rapido a consulta
                 .HasFillFactor(80) // VALOR FATOR PREENCHIMENTO DAS PAGINAS DE DADOS E O RESTO PARA  FAZER 100% SQL SERVER GERENCIA
                 .IsUnique();// nao duplicar o indice; // indice composto de duas colunas
+            */
+
+            //   Propagação de dados - Criar a tabela ja com dados 
+            modelBuilder.Entity<Estado>().HasData(new[]
+            {
+                new Estado{Id=1,Nome="Sao Paulo"},
+                new Estado{Id=2,Nome="Sergipe"}
+            }); 
+            // Modelo de semente Iniciais
+            // na migracao o ef para o db as operacoes que podem ser realizada inset delete update
         }
     }
 }

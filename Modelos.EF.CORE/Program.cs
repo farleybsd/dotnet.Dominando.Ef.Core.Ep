@@ -1,4 +1,5 @@
-﻿using Modelos.EF.CORE.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Modelos.EF.CORE.Data;
 using System;
 
 namespace Modelos.EF.CORE
@@ -7,7 +8,8 @@ namespace Modelos.EF.CORE
     {
         static void Main(string[] args)
         {
-            Collations();
+            //Collations();
+            PropagarDados();
             Console.ReadKey();
         }
 
@@ -16,6 +18,17 @@ namespace Modelos.EF.CORE
             using var db = new ApplicationContext();
             db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
+        }
+        static void PropagarDados()
+        {
+            // Criar a tabela ja com dados 
+            using var db = new ApplicationContext();
+
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
+            var script = db.Database.GenerateCreateScript();
+            Console.WriteLine(script);
         }
     }
 }
