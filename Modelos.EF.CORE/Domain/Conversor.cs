@@ -14,6 +14,7 @@ namespace Modelos.EF.CORE.Domain
         public bool Excluido { get; set; }
         public Versao Versao { get; set; }
         public IPAddress EnderecoIp { get; set; }
+        public Status Status { get; set; }
     }
 
     public enum Versao
@@ -23,5 +24,12 @@ namespace Modelos.EF.CORE.Domain
         EFCore3,
         EFCore4,
         EFCore5,
+    }
+
+    public enum Status
+    {
+        Analise,
+        Enviado,
+        Devolvido
     }
 }

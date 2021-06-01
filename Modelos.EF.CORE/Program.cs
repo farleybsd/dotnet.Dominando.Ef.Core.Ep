@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Modelos.EF.CORE.Conversores;
 using Modelos.EF.CORE.Data;
+using Modelos.EF.CORE.Domain;
 using System;
+using System.Linq;
 
 namespace Modelos.EF.CORE
 {
@@ -11,7 +14,8 @@ namespace Modelos.EF.CORE
             //Collations();
             //PropagarDados();
             //Esquema();
-            ConversorDeValor();
+            //ConversorDeValor();
+            ConversorCustomizado();
             Console.ReadKey();
         }
 
@@ -42,5 +46,21 @@ namespace Modelos.EF.CORE
         }
 
         static void ConversorDeValor() => Esquema();
+        static void ConversorCustomizado()
+        {
+            using var db = new ApplicationContext();
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
+            db.Conversores.Add( new Conversor 
+            {
+                Status = Status.Devolvido
+            });
+
+            db.SaveChanges();
+
+            var conversorEmAnalise = db.Conversores.AsNoTracking().FirstOrDefault(p => p.Status == Status.Analise);
+            var conversorDeVolvido = db.Conversores.AsNoTracking().FirstOrDefault(p => p.Status == Status.Devolvido);
+        }
     }
 }

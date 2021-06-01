@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Logging;
+using Modelos.EF.CORE.Conversores;
 using Modelos.EF.CORE.Domain;
 using System;
 using System.Collections.Generic;
@@ -92,15 +93,20 @@ namespace Modelos.EF.CORE.Data
             //Conversores de Valores no DB
             // consultar conversores EF
             //Microsoft.EntityFrameworkCore.Storage.ValueConversion.
-            var conversao = new ValueConverter<Versao, string>(p => p.ToString(), p => (Versao)Enum.Parse(typeof(Versao), p));
+            //var conversao = new ValueConverter<Versao, string>(p => p.ToString(), p => (Versao)Enum.Parse(typeof(Versao), p));
 
-            var conversao1 = new EnumToStringConverter<Versao>();
+            //var conversao1 = new EnumToStringConverter<Versao>();
 
+            //modelBuilder.Entity<Conversor>()
+            //    .Property(p => p.Versao)
+            //    .HasConversion(conversao);
+            //.HasConversion(p => p.ToString(), p => (Versao)Enum.Parse(typeof(Versao), p)); // vai salvar como string na aplicacao vai ser um enum
+            //.HasConversion<string>();
+
+            // Conversor Customizado
             modelBuilder.Entity<Conversor>()
-                .Property(p => p.Versao)
-                .HasConversion(conversao);
-                //.HasConversion(p => p.ToString(), p => (Versao)Enum.Parse(typeof(Versao), p)); // vai salvar como string na aplicacao vai ser um enum
-                //.HasConversion<string>();
+                        .Property(p => p.Status)
+                        .HasConversion(new ConversorCustomizado());
         }
     }
 }
