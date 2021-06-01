@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Logging;
 using Modelos.EF.CORE.Domain;
 using System;
@@ -14,6 +15,7 @@ namespace Modelos.EF.CORE.Data
         public DbSet<Departamento> Departamentos { get; set; }
         public DbSet<Funcionario> Funcionarios { get; set; }
         public DbSet<Estado> Estados { get; set; }
+        public DbSet<Conversor> Conversores { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -84,8 +86,21 @@ namespace Modelos.EF.CORE.Data
             // na migracao o ef para o db as operacoes que podem ser realizada inset delete update
 
             // esquema de formal Global
-            modelBuilder.HasDefaultSchema("cadastros");
-            modelBuilder.Entity<Estado>().ToTable("Estados","SegundoEsquema");
+            //modelBuilder.HasDefaultSchema("cadastros");
+            //modelBuilder.Entity<Estado>().ToTable("Estados","SegundoEsquema");
+
+            //Conversores de Valores no DB
+            // consultar conversores EF
+            //Microsoft.EntityFrameworkCore.Storage.ValueConversion.
+            var conversao = new ValueConverter<Versao, string>(p => p.ToString(), p => (Versao)Enum.Parse(typeof(Versao), p));
+
+            var conversao1 = new EnumToStringConverter<Versao>();
+
+            modelBuilder.Entity<Conversor>()
+                .Property(p => p.Versao)
+                .HasConversion(conversao);
+                //.HasConversion(p => p.ToString(), p => (Versao)Enum.Parse(typeof(Versao), p)); // vai salvar como string na aplicacao vai ser um enum
+                //.HasConversion<string>();
         }
     }
 }

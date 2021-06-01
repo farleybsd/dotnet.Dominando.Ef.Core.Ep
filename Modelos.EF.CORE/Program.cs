@@ -10,7 +10,8 @@ namespace Modelos.EF.CORE
         {
             //Collations();
             //PropagarDados();
-            Esquema();
+            //Esquema();
+            ConversorDeValor();
             Console.ReadKey();
         }
 
@@ -39,5 +40,7 @@ namespace Modelos.EF.CORE
             var script = db.Database.GenerateCreateScript();
             Console.WriteLine(script);
         }
+
+        static void ConversorDeValor() => Esquema();
     }
 }
