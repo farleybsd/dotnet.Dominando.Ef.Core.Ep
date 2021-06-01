@@ -75,13 +75,17 @@ namespace Modelos.EF.CORE.Data
             */
 
             //   Propagação de dados - Criar a tabela ja com dados 
-            modelBuilder.Entity<Estado>().HasData(new[]
-            {
-                new Estado{Id=1,Nome="Sao Paulo"},
-                new Estado{Id=2,Nome="Sergipe"}
-            }); 
+            //modelBuilder.Entity<Estado>().HasData(new[]
+            //{
+            //    new Estado{Id=1,Nome="Sao Paulo"},
+            //    new Estado{Id=2,Nome="Sergipe"}
+            //}); 
             // Modelo de semente Iniciais
             // na migracao o ef para o db as operacoes que podem ser realizada inset delete update
+
+            // esquema de formal Global
+            modelBuilder.HasDefaultSchema("cadastros");
+            modelBuilder.Entity<Estado>().ToTable("Estados","SegundoEsquema");
         }
     }
 }

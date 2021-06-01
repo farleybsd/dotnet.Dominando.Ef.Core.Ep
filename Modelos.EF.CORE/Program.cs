@@ -9,7 +9,8 @@ namespace Modelos.EF.CORE
         static void Main(string[] args)
         {
             //Collations();
-            PropagarDados();
+            //PropagarDados();
+            Esquema();
             Console.ReadKey();
         }
 
@@ -26,6 +27,14 @@ namespace Modelos.EF.CORE
 
             db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
+
+            var script = db.Database.GenerateCreateScript();
+            Console.WriteLine(script);
+        }
+        static void Esquema()
+        {
+            // Criar a tabela ja com dados 
+            using var db = new ApplicationContext();
 
             var script = db.Database.GenerateCreateScript();
             Console.WriteLine(script);
