@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Data.SqlClient;
 using Modelos.EF;
+using System.Text.Json;
+
 namespace Modelos.EF.CORE
 {
     class Program
@@ -21,7 +23,8 @@ namespace Modelos.EF.CORE
             //ConversorDeValor();
             //ConversorCustomizado();
             //PropriedadesDeSombra();
-            TrabalhandoComPropiedadesDeSombra();
+            //TrabalhandoComPropiedadesDeSombra();
+            TiposDePropiedades();
             Console.ReadKey();
         }
 
@@ -96,6 +99,36 @@ namespace Modelos.EF.CORE
             using var db = new  ApplicationContext();
 
            // var departamentos = db.Departamentos.Where(p => EF.Property<DateTime>(p, "UltimaAtualizacao") < DateTime.Now).ToArray();
+        }
+        static void TiposDePropiedades()
+        {
+            //Owned Types
+
+            using var db = new ApplicationContext();
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
+            var cliente = new Cliente
+            {
+                Nome = "Fulano de Tal",
+                Telefone = "(79) 98888-9999",
+                Endereco = new Endereco {Bairro="Centro",Cidade="Sao Paulo" }
+                
+            };
+
+            db.Clientes.Add(cliente);
+            db.SaveChanges();
+
+            var clientes = db.Clientes.AsNoTracking().ToList();
+
+            var options = new JsonSerializerOptions { WriteIndented = true };
+
+            clientes.ForEach( cli => {
+
+                var json = JsonSerializer.Serialize(cli, options);
+
+                Console.WriteLine(json);
+            });
         }
 
     }

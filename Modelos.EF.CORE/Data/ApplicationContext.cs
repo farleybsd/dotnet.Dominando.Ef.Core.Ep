@@ -17,6 +17,7 @@ namespace Modelos.EF.CORE.Data
         public DbSet<Funcionario> Funcionarios { get; set; }
         public DbSet<Estado> Estados { get; set; }
         public DbSet<Conversor> Conversores { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -104,12 +105,23 @@ namespace Modelos.EF.CORE.Data
             //.HasConversion<string>();
 
             // Conversor Customizado
-            modelBuilder.Entity<Conversor>()
-                        .Property(p => p.Status)
-                        .HasConversion(new ConversorCustomizado());
+            //modelBuilder.Entity<Conversor>()
+            //            .Property(p => p.Status)
+            //            .HasConversion(new ConversorCustomizado());
 
             //shadow Propeties
-            modelBuilder.Entity<Departamento>().Property<DateTime>("UltimaAtualizacao");
+            //modelBuilder.Entity<Departamento>().Property<DateTime>("UltimaAtualizacao");
+
+            //Owned Types Tipos Complexos
+            modelBuilder.Entity<Cliente>(p => {
+
+                p.OwnsOne(x => x.Endereco,end=> 
+                {
+                    end.Property(p => p.Bairro).HasColumnName("Bairro"); // Criando o nome na tabela do db
+                    end.ToTable("Endereco");
+                });
+            
+            });
         }
     }
 }
