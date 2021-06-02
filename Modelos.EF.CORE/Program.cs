@@ -4,7 +4,11 @@ using Modelos.EF.CORE.Data;
 using Modelos.EF.CORE.Domain;
 using System;
 using System.Linq;
-
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Data.SqlClient;
+using Modelos.EF;
 namespace Modelos.EF.CORE
 {
     class Program
@@ -16,7 +20,8 @@ namespace Modelos.EF.CORE
             //Esquema();
             //ConversorDeValor();
             //ConversorCustomizado();
-            PropriedadesDeSombra();
+            //PropriedadesDeSombra();
+            TrabalhandoComPropiedadesDeSombra();
             Console.ReadKey();
         }
 
@@ -70,5 +75,28 @@ namespace Modelos.EF.CORE
             db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
         }
+        static void TrabalhandoComPropiedadesDeSombra()
+        {
+            using var db = new ApplicationContext();
+            db.Database.EnsureCreated();
+            db.Database.EnsureCreated();
+
+            var departamento = new Departamento
+            {
+                Descricao = "Departamento Propiedade de Sombra"
+            };
+
+            db.Departamentos.Add(departamento);
+            //shadow Propeties
+            db.Entry(departamento).Property("UltimaAtualizacao").CurrentValue = DateTime.Now;
+            db.SaveChanges();
+        }
+        static void ConsultadoshadowPropeties()
+        {
+            using var db = new  ApplicationContext();
+
+           // var departamentos = db.Departamentos.Where(p => EF.Property<DateTime>(p, "UltimaAtualizacao") < DateTime.Now).ToArray();
+        }
+
     }
 }
