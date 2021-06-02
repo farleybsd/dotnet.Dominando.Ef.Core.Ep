@@ -107,6 +107,9 @@ namespace Modelos.EF.CORE.Data
             modelBuilder.Entity<Conversor>()
                         .Property(p => p.Status)
                         .HasConversion(new ConversorCustomizado());
+
+            //shadow Propeties
+            modelBuilder.Entity<Departamento>().Property<DateTime>("UltimaAtualizacao");
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Modelos.EF.CORE.Domain
         public string Cpf { get; set; }
         public string Rg { get; set; }
         public bool Excluido { get; set; }
-        public int DepartamentoId { get; set; }
+        public int DepartamentoId { get; set; } //fk
         public Departamento Departamento { get; set; }
     }
 }

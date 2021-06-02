@@ -15,7 +15,8 @@ namespace Modelos.EF.CORE
             //PropagarDados();
             //Esquema();
             //ConversorDeValor();
-            ConversorCustomizado();
+            //ConversorCustomizado();
+            PropriedadesDeSombra();
             Console.ReadKey();
         }
 
@@ -61,6 +62,13 @@ namespace Modelos.EF.CORE
 
             var conversorEmAnalise = db.Conversores.AsNoTracking().FirstOrDefault(p => p.Status == Status.Analise);
             var conversorDeVolvido = db.Conversores.AsNoTracking().FirstOrDefault(p => p.Status == Status.Devolvido);
+        }
+        static void PropriedadesDeSombra()
+        {
+            using var db = new ApplicationContext();
+
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
         }
     }
 }
