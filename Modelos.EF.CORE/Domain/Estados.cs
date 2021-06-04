@@ -20,7 +20,7 @@ namespace Modelos.EF.CORE.Domain
         public string Nome { get; set; }
         public int Idade { get; set; }
         public int Partido { get; set; }
-        public int EstadoId { get; set; } // fk governador e depedente de um estado
+        public int EstadoId { get; set; } // fk governador e depedente de um estado POR ISSO E OBG A TER UMA FK
         //Propiedade de referencia no governador  para o estado relacionameto 1x1
         public Estado Estado { get; set; }
     }
