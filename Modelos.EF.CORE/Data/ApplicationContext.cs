@@ -1,11 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Logging;
+using Modelos.EF.CORE.Configurations;
 using Modelos.EF.CORE.Conversores;
 using Modelos.EF.CORE.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -113,15 +115,20 @@ namespace Modelos.EF.CORE.Data
             //modelBuilder.Entity<Departamento>().Property<DateTime>("UltimaAtualizacao");
 
             //Owned Types Tipos Complexos
-            modelBuilder.Entity<Cliente>(p => {
+            //modelBuilder.Entity<Cliente>(p => {
 
-                p.OwnsOne(x => x.Endereco,end=> 
-                {
-                    end.Property(p => p.Bairro).HasColumnName("Bairro"); // Criando o nome na tabela do db
-                    end.ToTable("Endereco");
-                });
-            
-            });
+            //    p.OwnsOne(x => x.Endereco,end=> 
+            //    {
+            //        end.Property(p => p.Bairro).HasColumnName("Bairro"); // Criando o nome na tabela do db
+            //        end.ToTable("Endereco");
+            //    });
+
+            //});
+
+            //Fluent Api
+            // modelBuilder.ApplyConfiguration(new ClienteConfiguration()); modelo 1
+            //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());// modo 2
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationContext).Assembly); // modo3
         }
     }
 }

@@ -24,7 +24,8 @@ namespace Modelos.EF.CORE
             //ConversorCustomizado();
             //PropriedadesDeSombra();
             //TrabalhandoComPropiedadesDeSombra();
-            TiposDePropiedades();
+            //TiposDePropiedades();
+            RelacionamentoUmParaUm();
             Console.ReadKey();
         }
 
@@ -129,6 +130,22 @@ namespace Modelos.EF.CORE
 
                 Console.WriteLine(json);
             });
+        }
+        static void RelacionamentoUmParaUm()
+        {
+            using var db = new ApplicationContext();
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
+            var estado = new Estado { Nome="Sergipe",Governador = new Governador { Nome="Rafael Almeida" } };
+            
+            db.Estados.Add(estado);
+
+            db.SaveChanges();
+
+            //var estados = db.Estados.Include(p=> p.Governador).AsNoTracking().ToList();
+            var estados = db.Estados.AsNoTracking().ToList();
+            estados.ForEach(estado => { Console.WriteLine($"Estado: {estado.Nome}, Governador: {estado.Governador.Nome}"); });
         }
 
     }
