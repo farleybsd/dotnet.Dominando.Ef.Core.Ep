@@ -21,7 +21,14 @@ namespace Modelos.EF.CORE.Configurations
 
             builder.Navigation(P => P.Governador).AutoInclude(); // NAO PRECISAR O METODO INCLUDE PARA  TRAZER DADOS USANDO O JOIN
 
+            //Configurando Relacionamento um-para-muitos
 
+            builder.HasMany(p => p.Cidades)
+                //.WithOne() // configurando propiedade de navegacao unica quando n tenho estado dentro da cidade
+                .WithOne(p => p.Estado);
+                //.IsRequired(false) removendo a depedencia da fk vc pode criar uma cidade sem ter estado
+                //.OnDelete(DeleteBehavior.Restrict)  removendo o delete cascade
+                
         }
     }
 }

@@ -25,7 +25,8 @@ namespace Modelos.EF.CORE
             //PropriedadesDeSombra();
             //TrabalhandoComPropiedadesDeSombra();
             //TiposDePropiedades();
-            RelacionamentoUmParaUm();
+            //RelacionamentoUmParaUm();
+            RelacionamentosUmParaMuitos();
             Console.ReadKey();
         }
 
@@ -146,6 +147,46 @@ namespace Modelos.EF.CORE
             //var estados = db.Estados.Include(p=> p.Governador).AsNoTracking().ToList();
             var estados = db.Estados.AsNoTracking().ToList();
             estados.ForEach(estado => { Console.WriteLine($"Estado: {estado.Nome}, Governador: {estado.Governador.Nome}"); });
+        }
+
+        static void RelacionamentosUmParaMuitos()
+        {
+            using (var db = new ApplicationContext())
+            {
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
+
+                var estado = new Estado
+                {
+                    Nome = "Sergipe",
+                    Governador = new Governador { Nome = "Rufinão" }
+                };
+
+                estado.Cidades.Add(new Cidade { Nome = "Itabaiana" });
+
+                db.Estados.Add(estado);
+
+                db.SaveChanges();
+            }
+
+            using (var db = new ApplicationContext())
+            {
+                var estado = db.Estados.ToList();
+
+                estado[0].Cidades.Add(new Cidade { Nome = "Aracaju" });
+
+                db.SaveChanges();
+
+                foreach (var est in db.Estados.Include(p => p.Cidades).AsNoTracking())
+                {
+                    Console.WriteLine($"Estado: {est.Nome}, Governador: {est.Governador.Nome}");
+                    
+                    foreach (var cidade in est.Cidades)
+                    {
+                        Console.WriteLine($"\t Cidade: {cidade.Nome}");
+                    }
+                }
+            }
         }
 
     }
