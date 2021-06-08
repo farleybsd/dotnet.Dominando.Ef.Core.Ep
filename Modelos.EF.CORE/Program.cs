@@ -26,7 +26,8 @@ namespace Modelos.EF.CORE
             //TrabalhandoComPropiedadesDeSombra();
             //TiposDePropiedades();
             //RelacionamentoUmParaUm();
-            RelacionamentosUmParaMuitos();
+            //RelacionamentosUmParaMuitos();
+            RelacionamentoMuitosParaMuitos();
             Console.ReadKey();
         }
 
@@ -148,7 +149,6 @@ namespace Modelos.EF.CORE
             var estados = db.Estados.AsNoTracking().ToList();
             estados.ForEach(estado => { Console.WriteLine($"Estado: {estado.Nome}, Governador: {estado.Governador.Nome}"); });
         }
-
         static void RelacionamentosUmParaMuitos()
         {
             using (var db = new ApplicationContext())
@@ -184,6 +184,46 @@ namespace Modelos.EF.CORE
                     foreach (var cidade in est.Cidades)
                     {
                         Console.WriteLine($"\t Cidade: {cidade.Nome}");
+                    }
+                }
+            }
+        }
+        static void RelacionamentoMuitosParaMuitos()
+        {
+            using (var db = new ApplicationContext())
+            {
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
+
+                var ator1 = new Ator { Nome="Farley" };
+                var ator2 = new Ator { Nome="Pires" };
+                var ator3 = new Ator { Nome="Rafael" };
+
+                var filme1 = new Filme { Descricao="A volta dos que não foram" };
+                var filme2 = new Filme { Descricao = " De Volta para o futuro" };
+                var filme3 = new Filme { Descricao = "Poeria em alto mar filme" };
+
+
+                ator1.Filmes.Add(filme1);
+                ator1.Filmes.Add(filme2);
+
+                ator2.Filmes.Add(filme1);
+
+                filme3.Atores.Add(ator1);
+                filme3.Atores.Add(ator2);
+                filme3.Atores.Add(ator3);
+
+                db.AddRange(ator1, ator2, filme3);
+
+                db.SaveChanges();
+
+                foreach (var ator in db.Atores.Include(p => p.Filmes))
+                {
+                    Console.WriteLine($"Ator: {ator.Nome}");
+
+                    foreach (var filme in ator.Filmes)
+                    {
+                        Console.WriteLine($"\tFilme: {filme.Descricao}");
                     }
                 }
             }
