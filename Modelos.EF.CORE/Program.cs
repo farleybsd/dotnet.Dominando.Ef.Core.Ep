@@ -31,7 +31,8 @@ namespace Modelos.EF.CORE
             //RelacionamentoMuitosParaMuitos();
             //CamposDeApoio();
             //ExemploTph();
-            PacotesDePropriedades();
+            //PacotesDePropriedades();
+            Atributos();
             Console.ReadKey();
         }
 
@@ -318,6 +319,14 @@ namespace Modelos.EF.CORE
                 {
                     Console.WriteLine($"Chave: {dic["Chave"]} - Valor: {dic["Valor"]}");
                 }
+            }
+        }
+        static void Atributos() // DataNotations
+        {
+            using (var db = new ApplicationContext())
+            {
+                var script = db.Database.GenerateCreateScript(); // script de geracao do banco
+                Console.WriteLine(script);
             }
         }
     }
