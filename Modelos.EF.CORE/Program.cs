@@ -32,7 +32,8 @@ namespace Modelos.EF.CORE
             //CamposDeApoio();
             //ExemploTph();
             //PacotesDePropriedades();
-            Atributos();
+            //Atributos();
+            DatabaseGeneratedComputed();
             Console.ReadKey();
         }
 
@@ -327,6 +328,22 @@ namespace Modelos.EF.CORE
             {
                 var script = db.Database.GenerateCreateScript(); // script de geracao do banco
                 Console.WriteLine(script);
+            }
+        }
+        static void DatabaseGeneratedComputed()
+        {
+            using (var db = new ApplicationContext())
+            {
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
+
+                var script = db.Database.GenerateCreateScript();
+
+                Console.WriteLine(script);
+
+                db.Atributos.Add(new Atributo {Descricao="Exemplo",Observacao="observacao" });
+
+                db.SaveChanges();
             }
         }
     }
