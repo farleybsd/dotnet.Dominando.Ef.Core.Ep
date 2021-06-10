@@ -27,7 +27,8 @@ namespace Modelos.EF.CORE
             //TiposDePropiedades();
             //RelacionamentoUmParaUm();
             //RelacionamentosUmParaMuitos();
-            RelacionamentoMuitosParaMuitos();
+            //RelacionamentoMuitosParaMuitos();
+            CamposDeApoio();
             Console.ReadKey();
         }
 
@@ -228,6 +229,25 @@ namespace Modelos.EF.CORE
                 }
             }
         }
+        static void CamposDeApoio() //Campo de apoio BACKING FIELD
+        {
+            using (var db = new ApplicationContext())
+            {
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
 
+                var documento = new Documento();
+                documento.SetCpf("12345678933");
+
+                db.Documentos.Add(documento);
+
+                db.SaveChanges();
+
+                foreach (var doc in db.Documentos.AsNoTracking())
+                {
+                    Console.WriteLine($"CPF => {doc.GetCPF()}");
+                }
+            }
+        }
     }
 }
