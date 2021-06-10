@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Data.SqlClient;
 using Modelos.EF;
 using System.Text.Json;
+using System.Collections.Generic;
 
 namespace Modelos.EF.CORE
 {
@@ -29,7 +30,8 @@ namespace Modelos.EF.CORE
             //RelacionamentosUmParaMuitos();
             //RelacionamentoMuitosParaMuitos();
             //CamposDeApoio();
-            ExemploTph();
+            //ExemploTph();
+            PacotesDePropriedades();
             Console.ReadKey();
         }
 
@@ -287,6 +289,34 @@ namespace Modelos.EF.CORE
                 foreach (var p in alunos)
                 {
                     Console.WriteLine($"Id: {p.Id} -> {p.Nome}, Idade: {p.Idade}, Data Contrato: {p.DataContrato}");
+                }
+            }
+        }
+        static void PacotesDePropriedades()
+        {
+            using (var db = new ApplicationContext())
+            {
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
+
+                var configuracao = new Dictionary<string, object>
+                {
+                    ["Chave"] = "SenhaBancoDeDados",
+                    ["Valor"] = Guid.NewGuid().ToString()
+                };
+
+                db.configuracoes.Add(configuracao);
+                db.SaveChanges();
+
+                var configuracoes = db
+                    .configuracoes
+                    .AsNoTracking()
+                    .Where(p => p["Chave"] == "SenhaBancoDeDados")
+                    .ToArray();
+
+                foreach (var dic in configuracoes)
+                {
+                    Console.WriteLine($"Chave: {dic["Chave"]} - Valor: {dic["Valor"]}");
                 }
             }
         }

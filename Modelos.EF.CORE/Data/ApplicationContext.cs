@@ -26,7 +26,8 @@ namespace Modelos.EF.CORE.Data
         public DbSet<Pessoa> Pessoas { get; set; }
         public DbSet<Instrutor> Instrutors { get; set; }
         public DbSet<Aluno> Alunos { get; set; }
-
+        public DbSet<Dictionary<string, object>> configuracoes => Set<Dictionary<string, object>>("configuracoes");
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             const string strConnection = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=DevIo-02;Integrated Security=True;pooling=true";
@@ -135,6 +136,20 @@ namespace Modelos.EF.CORE.Data
             // modelBuilder.ApplyConfiguration(new ClienteConfiguration()); modelo 1
             //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());// modo 2
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationContext).Assembly); // modo3
+
+            modelBuilder.SharedTypeEntity<Dictionary<string, object>>("configuracoes", b =>
+            {
+                b.Property<int>("id");
+
+                b.Property<string>("Chave")
+                 .HasColumnType("varchar(40)")
+                 .IsRequired();
+
+                b.Property<string>("Valor")
+                 .HasColumnType("varchar(255)")
+                 .IsRequired();
+            }
+            );
         }
     }
 }
