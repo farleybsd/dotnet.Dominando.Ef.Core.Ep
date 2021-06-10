@@ -28,7 +28,8 @@ namespace Modelos.EF.CORE
             //RelacionamentoUmParaUm();
             //RelacionamentosUmParaMuitos();
             //RelacionamentoMuitosParaMuitos();
-            CamposDeApoio();
+            //CamposDeApoio();
+            ExemploTph();
             Console.ReadKey();
         }
 
@@ -246,6 +247,46 @@ namespace Modelos.EF.CORE
                 foreach (var doc in db.Documentos.AsNoTracking())
                 {
                     Console.WriteLine($"CPF => {doc.GetCPF()}");
+                }
+            }
+        }
+        static void ExemploTph()
+        {
+            using (var db = new ApplicationContext())
+            {
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
+
+                var pessoa = new Pessoa {Nome = "Fulano de Tal" };
+                var instrutor = new Instrutor { Nome = "Farley Rufino",Tecnologia=".NET",Desde= DateTime.Now };
+                var aluno = new Aluno { Nome = "Rafael Ameilda",Idade=31,DataContrato=DateTime.Now };
+
+                db.AddRange(pessoa,instrutor,aluno);
+                db.SaveChanges();
+
+                var pessoas = db.Pessoas.AsNoTracking().ToArray();
+                var instrutores = db.Instrutors.AsNoTracking().ToArray();
+                //var alunos = db.Alunos.AsNoTracking().ToArray();
+                var alunos = db.Pessoas.OfType<Aluno>().AsNoTracking().ToArray();
+                Console.WriteLine("**** Pesssoas ****");
+
+                foreach (var p in pessoas)
+                {
+                    Console.WriteLine($"Id: {p.Id} -> {p.Nome}");
+                }
+
+                Console.WriteLine("**** Instutores ****");
+
+                foreach (var p in instrutores)
+                {
+                    Console.WriteLine($"Id: {p.Id} -> {p.Nome}, Tecnologia: {p.Tecnologia}, Desde: {p.Desde}");
+                }
+
+                Console.WriteLine("**** Alunos ****");
+
+                foreach (var p in alunos)
+                {
+                    Console.WriteLine($"Id: {p.Id} -> {p.Nome}, Idade: {p.Idade}, Data Contrato: {p.DataContrato}");
                 }
             }
         }

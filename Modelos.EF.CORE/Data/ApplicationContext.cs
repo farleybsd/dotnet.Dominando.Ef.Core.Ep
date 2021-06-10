@@ -23,6 +23,9 @@ namespace Modelos.EF.CORE.Data
         public DbSet<Ator> Atores { get; set; }
         public DbSet<Filme> Filmes { get; set; }
         public DbSet<Documento> Documentos { get; set; }
+        public DbSet<Pessoa> Pessoas { get; set; }
+        public DbSet<Instrutor> Instrutors { get; set; }
+        public DbSet<Aluno> Alunos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
