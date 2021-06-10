@@ -24,12 +24,15 @@ namespace Modelos.EF.CORE.Domain
     {
         public int Id { get; set; }
         public string Nome { get; set; }
+        [NotMapped] // Quando nao quiser criar objeto ou uma propiedade no banco
+        public string PropriedadeTeste { get; set; }
         [InverseProperty("AeroportoPartida")] // forcar o relacionamento
         public ICollection<Voo> VoosDePartida { get; set; }
         [InverseProperty("AeroportoChegada")] // forcar o relacionamento
         public ICollection<Voo> VoosDeChegada { get; set; }
     }
 
+    [NotMapped] // Quando nao quiser criar objeto ou uma propiedade no banco
     public class Voo
     {
         public int Id { get; set; }
