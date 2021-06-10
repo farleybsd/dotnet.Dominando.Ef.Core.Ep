@@ -27,6 +27,7 @@ namespace Modelos.EF.CORE.Data
         public DbSet<Instrutor> Instrutors { get; set; }
         public DbSet<Aluno> Alunos { get; set; }
         public DbSet<Atributo> Atributos { get; set; }
+        public DbSet<Aeroporto> Aeroportos { get; set; }
         public DbSet<Dictionary<string, object>> configuracoes => Set<Dictionary<string, object>>("configuracoes");
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
