@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 namespace Modelos.EF.CORE.Domain
 {
     [Table("TabelaAtributos")]
+    [Index(nameof(Descricao),nameof(Id),IsUnique=true)] //indice para o banco de dados
     public class Atributo
     {
         [Key] // chave primaria
