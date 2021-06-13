@@ -11,6 +11,7 @@ namespace Modelos.EF.CORE.Domain
 {
     [Table("TabelaAtributos")]
     [Index(nameof(Descricao),nameof(Id),IsUnique=true)] //indice para o banco de dados
+    [Comment("Meu comentario de minha tabela")] // comentario no banco de dados
     public class Atributo
     {
         [Key] // chave primaria
@@ -18,6 +19,7 @@ namespace Modelos.EF.CORE.Domain
         //[DatabaseGenerated(DatabaseGeneratedOption.None)]  impende que o banco de dados gere o modelo como por exepmlo identy banco n ira colocar vc tem q coloca
         public int Id { get; set; }
         [Column("MinhaDescricao", TypeName = "VARCHAR(100)")] // nome da coluna e o tipo no banco
+        [Comment("Meu comentario para meu campo")]
         public string Descricao { get; set; }
         ///[Required] // not null
         [MaxLength(255)] // tamanho maximo da coluna
