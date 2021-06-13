@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dotnet.EfCore.Consultas", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HabilbitandoLog.EF.CORE", "..\HabilbitandoLog.EF.CORE\HabilbitandoLog.EF.CORE.csproj", "{A89E1FCA-BA85-4F93-B65F-8E92D6489234}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modelos.EF.CORE", "..\Modelos.EF.CORE\Modelos.EF.CORE.csproj", "{EF53E38F-8FCC-4C16-9EDD-45B0CBA9D989}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modelos.EF.CORE", "..\Modelos.EF.CORE\Modelos.EF.CORE.csproj", "{EF53E38F-8FCC-4C16-9EDD-45B0CBA9D989}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functions", "..\Functions\Functions.csproj", "{4D59C9CF-CF57-4B7A-A242-9F1FDA9F2653}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{EF53E38F-8FCC-4C16-9EDD-45B0CBA9D989}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF53E38F-8FCC-4C16-9EDD-45B0CBA9D989}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF53E38F-8FCC-4C16-9EDD-45B0CBA9D989}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D59C9CF-CF57-4B7A-A242-9F1FDA9F2653}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D59C9CF-CF57-4B7A-A242-9F1FDA9F2653}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D59C9CF-CF57-4B7A-A242-9F1FDA9F2653}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D59C9CF-CF57-4B7A-A242-9F1FDA9F2653}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
