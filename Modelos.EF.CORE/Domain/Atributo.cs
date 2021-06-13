@@ -47,4 +47,12 @@ namespace Modelos.EF.CORE.Domain
         public Aeroporto AeroportoPartida { get; set; }
         public Aeroporto AeroportoChegada { get; set; }
     }
+    [Keyless] // resultado que nao tem uma chave primaria tipo view que traz os dados materializado
+              // Keyless nao deixa fazer persistencia de dados
+    public class RelatorioFinanceiro
+    {
+        public string Descricao { get; set; }
+        public decimal Total { get; set; }
+        public DateTime Data { get; set; }
+    }
 }
