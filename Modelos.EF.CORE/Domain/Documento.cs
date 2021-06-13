@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,8 @@ namespace Modelos.EF.CORE.Domain
             _cpf = cpf;
         }
 
+        [BackingField(nameof(_cpf))] // capo de apoio BackingField
+        public string CPF => _cpf;
         public string GetCPF()=> _cpf;
     }
 }
