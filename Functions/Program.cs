@@ -13,7 +13,8 @@ namespace Functions
 
             //FuncoesDeDatas();
             //FuncaoLike();
-            FuncaoDataLength();
+            //FuncaoDataLength();
+            FuncaoProperty();
             Console.ReadKey();
         }
         
@@ -117,6 +118,26 @@ namespace Functions
 
                 Console.WriteLine("Resultado:");
                 Console.WriteLine(resultado);
+            }
+        }
+        static void FuncaoProperty()
+        {
+            ApagarCriarBancoDeDados();
+
+            using (var db = new ApplicationContext())
+            {
+                var resultado = db
+                                  .Funcoes
+                                  //.AsNoTracking()
+                                  .FirstOrDefault(p => EF.Property<string>(p, "PropiedadeDeSombra") == "teste");
+
+                var propriedadedeSombra = db
+                                            .Entry(resultado)
+                                            .Property<string>("PropiedadeDeSombra")
+                                            .CurrentValue;
+
+                Console.WriteLine("Resultado:");
+                Console.WriteLine(propriedadedeSombra);
             }
         }
     }

@@ -21,5 +21,17 @@ namespace Functions.Data
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                        .Entity<Funcao>(conf => {
+
+                            conf.Property<string>("PropiedadeDeSombra")
+                                .HasColumnType("varchar(100)")
+                                .HasDefaultValueSql("'teste'");
+                        
+                        });
+        }
     }
 }
