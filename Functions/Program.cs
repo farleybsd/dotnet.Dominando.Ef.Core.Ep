@@ -11,7 +11,8 @@ namespace Functions
         static void Main(string[] args)
         {
 
-            FuncoesDeDatas();
+            //FuncoesDeDatas();
+            FuncaoLike();
             Console.ReadKey();
         }
         
@@ -71,6 +72,30 @@ namespace Functions
                     Console.WriteLine(f);
                 }
 
+            }
+        }
+        static void FuncaoLike()
+        {
+            using (var db = new ApplicationContext())
+            {
+                var script = db.Database.GenerateCreateScript();
+
+                Console.WriteLine(script);
+
+                var dados = db
+                              .Funcoes
+                              .AsNoTracking()
+                              //.Where(p=> EF.Functions.Like(p.Descricao1,"%Bo%"))
+                              .Where(p => EF.Functions.Like(p.Descricao1, "%B[ao]%"))
+                              .Select(p => p.Descricao1)
+                              .ToArray();
+
+                Console.WriteLine("Resultado:");
+
+                foreach (var descricao in dados)
+                {
+                    Console.WriteLine(descricao);
+                }
             }
         }
     }
