@@ -1,4 +1,5 @@
 ﻿using Interceptadores.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
@@ -18,6 +19,7 @@ namespace Interceptadores
             {
                 var consulta = db
                                 .Funcoes
+                                .TagWith("Use NOLOCK")
                                 .FirstOrDefault();
 
                 Console.WriteLine($"Consulta:{consulta?.Descricao1}");
