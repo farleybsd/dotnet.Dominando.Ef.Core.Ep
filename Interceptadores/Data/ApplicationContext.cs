@@ -19,7 +19,8 @@ namespace Interceptadores.Data
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging()
                 .AddInterceptors(new Interceptadores.InterceptadoresDeCommandos())
-                .AddInterceptors(new Interceptadores.InterceptadorConexao());
+                .AddInterceptors(new Interceptadores.InterceptadorConexao())
+                .AddInterceptors(new Interceptadores.InterceptadorPersistencia());
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
