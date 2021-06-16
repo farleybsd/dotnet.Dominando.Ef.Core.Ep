@@ -18,7 +18,8 @@ namespace Interceptadores.Data
                 .UseSqlServer(strConnection)
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging()
-                .AddInterceptors(new Interceptadores.InterceptadoresDeCommandos());
+                .AddInterceptors(new Interceptadores.InterceptadoresDeCommandos())
+                .AddInterceptors(new Interceptadores.InterceptadorConexao());
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
