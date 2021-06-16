@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Interceptadores.Data;
+using System;
+using System.Linq;
 
 namespace Interceptadores
 {
@@ -6,7 +8,20 @@ namespace Interceptadores
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            TesteInterceptacao();
+            Console.ReadKey();
+        }
+
+        static void TesteInterceptacao()
+        {
+            using (var db = new ApplicationContext())
+            {
+                var consulta = db
+                                .Funcoes
+                                .FirstOrDefault();
+
+                Console.WriteLine($"Consulta:{consulta?.Descricao1}");
+            }
         }
     }
 }
