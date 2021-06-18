@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Transactions;
 using Transacoes.Data;
 using Transacoes.Domain;
 
@@ -14,9 +15,68 @@ namespace Transacoes
             //GerenciandoTransacaoManualmente();
             //ReverterTransacao();
             //ReverterTransacao();
-            SalvarPontoTransacao();
+            //SalvarPontoTransacao();
+            TransactionScope();
             Console.ReadKey();
         }
+        static void TransactionScope()
+        {
+            // Execulta tudo dentro de um scopo
+            CadastrarLivro();
+
+            var transactionOptions = new TransactionOptions
+            {
+                IsolationLevel = IsolationLevel.ReadCommitted,
+                //Timeout = 60
+            };
+
+            using (var scope = new TransactionScope(TransactionScopeOption.Required, transactionOptions))
+            {
+                ConsultarAtualizar();
+                CadastraLivroEnterprise();
+                CadastrarLivroDominandoEFCore();
+
+                scope.Complete(); // faz commit
+            }
+        }
+        static void ConsultarAtualizar()
+        {
+            using (var db = new ApplicationContext())
+            {
+                var livro = db.Livros.FirstOrDefault(p => p.Id == 1);
+                livro.Autor = "Rafael Almeida";
+                db.SaveChanges();
+            }
+        }
+
+        static void CadastraLivroEnterprise()
+        {
+            using (var db = new ApplicationContext())
+            {
+                db.Livros.Add(
+                    new Livro
+                    {
+                        Titulo = "ASP.NET Core Enterprise Applications",
+                        Autor = "Eduardo Pires"
+                    });
+                db.SaveChanges();
+            }
+        }
+
+        static void CadastrarLivroDominandoEFCore()
+        {
+            using (var db = new ApplicationContext())
+            {
+                db.Livros.Add(
+                    new Livro
+                    {
+                        Titulo = "Dominando o Entity Framework Core",
+                        Autor = "Rafael Almeida"
+                    });
+                db.SaveChanges();
+            }
+        }
+
         static void SalvarPontoTransacao()
         {
             CadastrarLivro();
