@@ -9,10 +9,36 @@ namespace Transacoes
     {
         static void Main(string[] args)
         {
-            ComportamentoPadrao();
+            //ComportamentoPadrao();
+            GerenciandoTransacaoManualmente();
             Console.ReadKey();
         }
 
+        static void GerenciandoTransacaoManualmente()
+        {
+            CadastrarLivro();
+
+            using (var db = new ApplicationContext())
+            {
+                var transacao = db.Database.BeginTransaction();
+
+                var livro = db.Livros.FirstOrDefault(p => p.Id == 1);
+                livro.Autor = "Rafael Almeida";
+                db.SaveChanges();
+
+                db.Livros.Add(
+                    new Livro
+                    {
+                        Titulo = "Dominando o Entity Framework Core",
+                        Autor = "Rafael Almeida"
+                    }
+                );
+
+                db.SaveChanges();
+
+                transacao.Commit();
+            }
+        }
         static void ComportamentoPadrao()
         {
             CadastrarLivro();
