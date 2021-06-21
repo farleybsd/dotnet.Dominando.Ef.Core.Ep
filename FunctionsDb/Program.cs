@@ -11,7 +11,8 @@ namespace FunctionsDb
         static void Main(string[] args)
         {
             //FuncaoLeft();
-            FuncaoDefinidaPeloUsuario();
+            //FuncaoDefinidaPeloUsuario();
+            DateDiff();
             Console.ReadKey();
         }
 
@@ -41,7 +42,8 @@ namespace FunctionsDb
                     new Domain.Livro
                     {
                         Titulo = "Introdução ao Entity Framework Core",
-                        Autor = "Rafael"
+                        Autor = "Rafael",
+                        CadastradoEm = DateTime.Now.AddDays(-1)
                     });
 
                 db.SaveChanges();
@@ -65,6 +67,27 @@ namespace FunctionsDb
             foreach (var parteTitulo in resultado)
             {
                 Console.WriteLine(parteTitulo);
+            }
+        }
+        static void DateDiff()
+        {
+            CadastrarLivro();
+
+            using var db = new ApplicationContext();
+
+            /*
+            var resultado = db
+                            .Livros
+                            .Select(p => EF.Functions.DateDiffDay(p.CadastradoEm, DateTime.Now));
+            */
+
+            var resultado = db
+                            .Livros
+                            .Select(p => MinhasFunçoes.DateDiff("DAY",p.CadastradoEm, DateTime.Now));
+
+            foreach (var diff in resultado)
+            {
+                Console.WriteLine(diff);
             }
         }
     }

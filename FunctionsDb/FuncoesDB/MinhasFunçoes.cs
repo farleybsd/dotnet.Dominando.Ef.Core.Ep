@@ -12,6 +12,10 @@ namespace FunctionsDb.FuncoesDB
         {
             throw new NotImplementedException();
         }
+        public static int DateDiff(string identificador,DateTime dataInicial,DateTime dataFinal)
+        {
+            throw new NotImplementedException();
+        }
         public static void RegistrarFuncoes(ModelBuilder modelBuilder)
         {
             var funcoes = typeof(MinhasFunçoes).GetMethods().Where(p => Attribute.IsDefined(p, typeof(DbFunctionAttribute)));
