@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Functions", "..\Functions\F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Interceptadores", "..\Interceptadores\Interceptadores.csproj", "{F543373D-D49C-41AF-B714-684FC669B626}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transacoes", "..\Transacoes\Transacoes.csproj", "{48DAB160-E5CC-43F7-9A3B-9D86E456B64B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Transacoes", "..\Transacoes\Transacoes.csproj", "{48DAB160-E5CC-43F7-9A3B-9D86E456B64B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionsDb", "..\FunctionsDb\FunctionsDb.csproj", "{879D8895-0EE7-4E7C-84FF-81DF9376B28F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{48DAB160-E5CC-43F7-9A3B-9D86E456B64B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48DAB160-E5CC-43F7-9A3B-9D86E456B64B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48DAB160-E5CC-43F7-9A3B-9D86E456B64B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{879D8895-0EE7-4E7C-84FF-81DF9376B28F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{879D8895-0EE7-4E7C-84FF-81DF9376B28F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{879D8895-0EE7-4E7C-84FF-81DF9376B28F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{879D8895-0EE7-4E7C-84FF-81DF9376B28F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
