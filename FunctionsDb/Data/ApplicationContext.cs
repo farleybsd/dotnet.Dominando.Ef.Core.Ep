@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace FunctionsDb.Data
@@ -23,7 +24,11 @@ namespace FunctionsDb.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            MinhasFunçoes.RegistrarFuncoes(modelBuilder);
+            //MinhasFunçoes.RegistrarFuncoes(modelBuilder);
+            modelBuilder.HasDbFunction(typeof(MinhasFunçoes).GetRuntimeMethod("Left",
+              new[] { typeof(string), typeof(int) }))
+                .HasName("LEFT")
+                .IsBuiltIn();
         }
         //[DbFunction(name:"LEFT",schema:"",IsBuiltIn =true)] // funcao incorporada do db funcao nativa
         //public static string Left(string dados,int quantidade)
