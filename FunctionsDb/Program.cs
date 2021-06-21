@@ -1,4 +1,5 @@
 ﻿using FunctionsDb.Data;
+using FunctionsDb.FuncoesDB;
 using System;
 using System.Linq;
 
@@ -21,7 +22,7 @@ namespace FunctionsDb
 
             using var db = new ApplicationContext();
 
-            var resultado = db.Livros.Select(p=> ApplicationContext.Left(p.Titulo,10));
+            var resultado = db.Livros.Select(p=> MinhasFunçoes.Left(p.Titulo,10));
 
             foreach (var parteTitulo in resultado)
             {

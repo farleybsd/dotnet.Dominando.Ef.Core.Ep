@@ -1,4 +1,5 @@
 ﻿using FunctionsDb.Domain;
+using FunctionsDb.FuncoesDB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,10 +21,14 @@ namespace FunctionsDb.Data
                 .EnableSensitiveDataLogging();
         }
 
-        [DbFunction(name:"LEFT",schema:"",IsBuiltIn =true)] // funcao incorporada do db funcao nativa
-        public static string Left(string dados,int quantidade)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            throw new NotImplementedException();
+            MinhasFunçoes.RegistrarFuncoes(modelBuilder);
         }
+        //[DbFunction(name:"LEFT",schema:"",IsBuiltIn =true)] // funcao incorporada do db funcao nativa
+        //public static string Left(string dados,int quantidade)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }
