@@ -1,5 +1,6 @@
 ﻿using FunctionsDb.Data;
 using FunctionsDb.FuncoesDB;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
@@ -9,8 +10,8 @@ namespace FunctionsDb
     {
         static void Main(string[] args)
         {
-            FuncaoLeft();
-
+            //FuncaoLeft();
+            FuncaoDefinidaPeloUsuario();
             Console.ReadKey();
         }
 
@@ -44,6 +45,26 @@ namespace FunctionsDb
                     });
 
                 db.SaveChanges();
+            }
+        }
+        static void FuncaoDefinidaPeloUsuario()
+        {
+            CadastrarLivro();
+
+            using var db = new ApplicationContext();
+
+            db.Database.ExecuteSqlRaw(@"
+                CREATE FUNCTION ConverterParaLetrasMaisculas(@dados VARCHAR(100))
+                RETURNS VARCHAR(100)
+                BEGIN
+                    RETURN UPPER(@dados)
+                END");
+
+            var resultado = db.Livros.Select(p => MinhasFunçoes.LetrasMaiusculas(p.Titulo));
+
+            foreach (var parteTitulo in resultado)
+            {
+                Console.WriteLine(parteTitulo);
             }
         }
     }

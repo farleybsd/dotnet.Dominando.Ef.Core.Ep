@@ -29,7 +29,16 @@ namespace FunctionsDb.Data
               new[] { typeof(string), typeof(int) }))
                 .HasName("LEFT")
                 .IsBuiltIn();
+
+            modelBuilder
+                .HasDbFunction(_letrasMaisculas)
+                .HasName("ConverterParaLetrasMaisculas") //nome da funcao no banco de dados
+                .HasSchema("dbo");
         }
+
+        private static MethodInfo _letrasMaisculas = typeof(MinhasFunçoes)
+                       .GetRuntimeMethod(nameof(MinhasFunçoes.LetrasMaiusculas), new[] { typeof(string) });
+
         //[DbFunction(name:"LEFT",schema:"",IsBuiltIn =true)] // funcao incorporada do db funcao nativa
         //public static string Left(string dados,int quantidade)
         //{

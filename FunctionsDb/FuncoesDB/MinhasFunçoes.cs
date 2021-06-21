@@ -8,6 +8,10 @@ namespace FunctionsDb.FuncoesDB
 {
     public static class MinhasFunçoes
     {
+        public static string LetrasMaiusculas(string dados)
+        {
+            throw new NotImplementedException();
+        }
         public static void RegistrarFuncoes(ModelBuilder modelBuilder)
         {
             var funcoes = typeof(MinhasFunçoes).GetMethods().Where(p => Attribute.IsDefined(p, typeof(DbFunctionAttribute)));
