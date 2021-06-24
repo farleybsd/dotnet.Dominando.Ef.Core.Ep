@@ -14,7 +14,8 @@ namespace Performace
             //Setup();
             //ConsultaRastreada();
             //ConsultaNaoRastreada();
-            ConsultaComResolucaoIdentidade();
+            //ConsultaComResolucaoIdentidade();
+            ConsultaProjetadaERastreada();
             Console.ReadKey();
         }
         static void Setup()
@@ -79,6 +80,25 @@ namespace Performace
                 //.AsNoTrackingWithIdentityResolution()
                 .Include(p => p.Departamento)
                 .ToList();
+        }
+        static void ConsultaProjetadaERastreada()
+        {
+            // so de retornar a entidade ela ja fica rastreada
+            using var db = new ApplicationContext();
+
+            //db.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
+
+            var departamentos = db.Departamentos
+                //.AsNoTrackingWithIdentityResolution()
+                .Include(p => p.Funcionarios)
+                .Select(p=> new { 
+                    Departamento = p,
+                    TotolFuncionario = p.Funcionarios.Count()
+                })
+                .ToList();
+
+            departamentos[0].Departamento.Descricao = "Departamento Teste Atualizado";
+            db.SaveChanges();
         }
     }
 }
