@@ -15,7 +15,9 @@ namespace Performace
             //ConsultaRastreada();
             //ConsultaNaoRastreada();
             //ConsultaComResolucaoIdentidade();
-            ConsultaProjetadaERastreada();
+            //ConsultaProjetadaERastreada();
+            //Inserir_200_departamento_Com_1MB();
+            ConsultaProjetada();
             Console.ReadKey();
         }
         static void Setup()
@@ -24,17 +26,18 @@ namespace Performace
             db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
 
-            db.Departamentos.Add(new Departamento { 
-            
+            db.Departamentos.Add(new Departamento
+            {
+
                 Descricao = "Departamento Teste",
                 Ativo = true,
-                Funcionarios = Enumerable.Range(1,100).Select(p => new Funcionario // vai criar 100 funcionario automaticamente
+                Funcionarios = Enumerable.Range(1, 100).Select(p => new Funcionario // vai criar 100 funcionario automaticamente
                 {
-                    Cpf = p.ToString().PadLeft(11,'0'),
+                    Cpf = p.ToString().PadLeft(11, '0'),
                     Nome = $"Funcionario {p}",
                     Rg = p.ToString()
                 }).ToList()
-            
+
             });
 
             db.SaveChanges();
@@ -71,7 +74,7 @@ namespace Performace
         }
         static void ConsultaCustomizada()
         {
-           
+
             using var db = new ApplicationContext();
 
             db.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
@@ -91,7 +94,8 @@ namespace Performace
             var departamentos = db.Departamentos
                 //.AsNoTrackingWithIdentityResolution()
                 .Include(p => p.Funcionarios)
-                .Select(p=> new { 
+                .Select(p => new
+                {
                     Departamento = p,
                     TotolFuncionario = p.Funcionarios.Count()
                 })
@@ -99,6 +103,41 @@ namespace Performace
 
             departamentos[0].Departamento.Descricao = "Departamento Teste Atualizado";
             db.SaveChanges();
+        }
+        static void Inserir_200_departamento_Com_1MB()
+        {
+            using var db = new ApplicationContext();
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
+            db.Departamentos.AddRange(Enumerable.Range(1, 200).Select(p => new Departamento
+            {
+
+                Descricao = "Departamento Teste",
+                Image = getBytes()
+            }));
+
+            db.SaveChanges();
+
+            byte[] getBytes()
+            {
+                var buffer = new byte[1024 * 1024];
+                Random rnd = new Random();
+                rnd.NextBytes(buffer);
+                return buffer;
+            }
+        }
+        static void ConsultaProjetada()
+        {
+            
+            using var db = new ApplicationContext();
+
+            //var departamentos = db.Departamentos.ToArray();
+            var departamentos = db.Departamentos.Select(p=>p.Descricao).ToArray();
+
+            var memoria = (System.Diagnostics.Process.GetCurrentProcess().WorkingSet64 / 1024 / 1024) + "MB";
+
+            Console.WriteLine(memoria);
         }
     }
 }
