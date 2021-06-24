@@ -68,5 +68,17 @@ namespace Performace
                 .Include(p => p.Departamento)
                 .ToList();
         }
+        static void ConsultaCustomizada()
+        {
+           
+            using var db = new ApplicationContext();
+
+            db.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
+
+            var funcionario = db.Funcionarios
+                //.AsNoTrackingWithIdentityResolution()
+                .Include(p => p.Departamento)
+                .ToList();
+        }
     }
 }
