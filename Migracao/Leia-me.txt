@@ -33,3 +33,7 @@ Removendo uma migracao fisica
 Migrações pendentes Via Cmd
 	Entrar na pasta do projeto
 	dotnet ef migrations list -p Migracao.csproj
+
+Engenharia Reversa
+	Entrar na pasta do projeto
+	dotnet ef dbcontext scaffold "Data source=(localdb)\mssqllocaldb; Initial Catalog=DevIO-03;Integrated Security=true;pooling=true;" Microsoft.EntityFrameworkCore.SqlServer --table Pessoas --use-database-names --data-annotations --output-dir Entidades --namespace Meu.namespace 
