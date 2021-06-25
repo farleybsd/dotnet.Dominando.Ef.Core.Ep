@@ -1,0 +1,9 @@
+﻿Pacote com super set powershell para geracao de migrations
+Microsoft.EntityFrameworkCore.Tools
+
+ou
+
+Global Tool Entity Framework Core um cli para gerar as migraçoes de forma
+global
+
+dotnet tool install --global dotnet-ef --version 5.0.3
