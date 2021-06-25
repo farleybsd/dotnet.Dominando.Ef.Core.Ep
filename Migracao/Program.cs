@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Migracao.Data;
+using System;
 
 namespace Migracao
 {
@@ -6,7 +8,8 @@ namespace Migracao
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            using var db = new ApplicationContext();
+            db.Database.Migrate();
         }
     }
 }
