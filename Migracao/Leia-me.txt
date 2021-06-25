@@ -22,3 +22,10 @@ Gerando script SQLIdempotente // ele verifica se a estrutura esta criada antes d
 Persistindo as migracoes pelo cmd
 	Entrar na pasta do projeto
 	dotnet ef database update -p Migracao.csproj -v 
+
+Desfazendo migrações
+	dotnet ef database update PrimeiraMigracao -p Migracao.csproj -v   // informar a migracao que ele vai deixar igual nesse caso a ultima versao sem o campo q eu quero
+
+Removendo uma migracao fisica
+para excluir o arquivo fisico  execultar esse comando
+dotnet ef migrations  remove  -p Migracao.csproj -v
