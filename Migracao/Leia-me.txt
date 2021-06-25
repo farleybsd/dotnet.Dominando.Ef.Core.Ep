@@ -15,3 +15,6 @@ Entrar na pasta do projeto
 
 Gerando script SQL
 	dotnet ef migrations script  -p Migracao.csproj -o ScriptParaDba\TabelaPessoa.sql
+
+Gerando script SQLIdempotente // ele verifica se a estrutura esta criada antes de execultar (Recomendado))
+	dotnet ef migrations script  -p Migracao.csproj -o ScriptParaDba\TabelaPessoaIdempotente.sql -i
