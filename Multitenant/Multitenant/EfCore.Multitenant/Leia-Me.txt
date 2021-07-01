@@ -1,1 +1,5 @@
-﻿
+﻿Instalacoes Via Nuguet
+
+1 -> Microsoft.EntityFrameWorkCore.SqlServer version 5.0.3
+2 -> Microsoft.EntityFrameWorkCore.Design version 5.0.3
+3 -> Microsoft.EntityFrameWorkCore.Tools version 5.0.3
