@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace EfCore.Multitenant.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("{tenant}/[controller]")]
     public class ProductController : ControllerBase
     {
         
