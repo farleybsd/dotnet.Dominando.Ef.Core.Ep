@@ -1,7 +1,10 @@
+using EfCore.Multitenant.Data;
+using EfCore.Multitenant.Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,6 +29,10 @@ namespace EfCore.Multitenant
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddDbContext<ApplicationContext>(p => p
+              .UseSqlServer("Data source=(localdb)\\mssqllocaldb; Initial Catalog=Tenant99;Integrated Security=true;")
+              .LogTo(Console.WriteLine)
+              .EnableSensitiveDataLogging());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +43,7 @@ namespace EfCore.Multitenant
                 app.UseDeveloperExceptionPage();
             }
 
+            DatabaseInitialize(app);
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -46,6 +54,24 @@ namespace EfCore.Multitenant
             {
                 endpoints.MapControllers();
             });
+        }
+        private void DatabaseInitialize(IApplicationBuilder app)
+        {
+            using var db = app.ApplicationServices
+                .CreateScope()
+                .ServiceProvider
+                .GetRequiredService<ApplicationContext>();
+
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
+            for (var i = 1; i <= 5; i++)
+            {
+                db.People.Add(new Person { Name = $"Person {i}" });
+                db.Products.Add(new Product { Description = $"Product {i}" });
+            }
+
+            db.SaveChanges();
         }
     }
 }

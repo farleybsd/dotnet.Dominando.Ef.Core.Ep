@@ -3,3 +3,24 @@
 1 -> Microsoft.EntityFrameWorkCore.SqlServer version 5.0.3
 2 -> Microsoft.EntityFrameWorkCore.Design version 5.0.3
 3 -> Microsoft.EntityFrameWorkCore.Tools version 5.0.3
+
+Iniciando Projeto
+
+1 -> Criar Domain
+1.1 Person Class
+1.2 Product Class
+1.3 Abstract Folder 
+13.1 BaseEntity Class
+
+2 -> Criar Data
+2.1 ApplicationContext
+
+3 -> Startup.cs
+3.1   services.AddDbContext<ApplicationContext>(p=>p
+                .UseSqlServer("Data source=(localdb)\\mssqllocaldb; Initial Catalog=Tenant99;Integrated Security=true;")
+                .LogTo(Console.WriteLine)
+                .EnableSensitiveDataLogging());
+
+4 Controller 
+4.1 PersontController.cs
+4.2 ProductController.cs
