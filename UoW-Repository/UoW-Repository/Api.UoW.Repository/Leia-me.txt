@@ -28,3 +28,10 @@ Configurar Startup
 services.AddScoped<IDepartamentoRepository, DepartamentoRepository>();
 
 //NewtonsoftJson
+ services.AddControllers()
+                .AddNewtonsoftJson(options =>{
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                });
+//Swagger 
+Swashbuckle.AspNetCore" Version="5.6.3"
+https://localhost:5001/swagger/index.html

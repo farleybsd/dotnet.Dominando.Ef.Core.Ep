@@ -1,4 +1,5 @@
 ﻿using Api.UoW.Repository.Data.Repositories;
+using Api.UoW.Repository.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -32,6 +33,14 @@ namespace Api.UoW.Repository.Controllers
         public async Task<IActionResult> GetByIdAsync(int id)//[FromSe]IDepartamentoRepository repository
         {
             var departamento = await _departamentoRepository.GetByIdAsync(id);
+            return Ok(departamento);
+        }
+
+        [HttpPost]
+        public  IActionResult CreateDepartamento(Departamento departamento)//[FromSe]IDepartamentoRepository repository
+        {
+            _departamentoRepository.Add(departamento);
+            var saved = _departamentoRepository.Save();
             return Ok(departamento);
         }
     }
