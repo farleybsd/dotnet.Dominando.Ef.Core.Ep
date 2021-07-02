@@ -16,17 +16,17 @@ namespace Api.UoW.Repository.Controllers
     {
 
         private readonly ILogger<DepartamentoController> _logger;
-        private readonly IDepartamentoRepository _departamentoRepository;
+       // private readonly IDepartamentoRepository _departamentoRepository;
         private readonly IUnitOfWork _uow;
         public DepartamentoController
         (
             ILogger<DepartamentoController> logger,
-            IDepartamentoRepository repository,
+            //IDepartamentoRepository repository,
             IUnitOfWork uow
          )
         {
             _logger = logger;
-            _departamentoRepository = repository;
+           // _departamentoRepository = repository;
             _uow = uow;
         }
         /// <summary>
@@ -36,14 +36,16 @@ namespace Api.UoW.Repository.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)//[FromSe]IDepartamentoRepository repository
         {
-            var departamento = await _departamentoRepository.GetByIdAsync(id);
+            // var departamento = await _departamentoRepository.GetByIdAsync(id);
+            var departamento = await _uow.DepartamentoRepository.GetByIdAsync(id);
             return Ok(departamento);
         }
 
         [HttpPost]
         public  IActionResult CreateDepartamento(Departamento departamento)//[FromSe]IDepartamentoRepository repository
         {
-            _departamentoRepository.Add(departamento);
+            //_departamentoRepository.Add(departamento);
+            _uow.DepartamentoRepository.Add(departamento);
             //var saved = _departamentoRepository.Save();
             _uow.Commit();
             return Ok(departamento);
