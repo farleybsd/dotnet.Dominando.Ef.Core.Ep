@@ -2,6 +2,7 @@
 using Api.UoW.Repository.Data.Repositories;
 using Api.UoW.Repository.Domain;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -62,6 +63,21 @@ namespace Api.UoW.Repository.Controllers
             _uow.Commit();
 
             return Ok(departamento);
+        }
+
+        //departamento/?descricao=teste
+        [HttpGet]
+        public async Task<IActionResult> ConsultarDepartamentoAsync([FromQuery] string descricao)
+        {
+            var departamentos = await _uow.DepartamentoRepository
+                                         .GetDataAsync(p =>
+                                            p.Descricao.Contains(descricao),
+                                            p=> p.Include(c =>c.Colaboradores),
+                                            take:2
+                                            );
+
+
+            return Ok(departamentos);
         }
     }
 }
