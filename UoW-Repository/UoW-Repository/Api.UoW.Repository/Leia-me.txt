@@ -1,9 +1,30 @@
 ﻿Projeto Api
 
 1.0 Microsoft.EntityFrameWorkCore.SqlServer version 5.0.4
+
+1.0 Microsoft.AspnetCore.Mvc.NewtonsoftJson version 5.0.4
+
 1.1 Configurar Dominio
+
 1.2 Configurar ApplicationContext
+
 1.3 Configurar Startup
 //Registrando Contexto
 services.AddDbContext<ApplicationContext>(p=>
 p.UseSqlServer("Server=(localdb)\\mssqllocaldb; Database=UoW; Integrated Security=true"));
+
+1.4 Incializando o Banco
+ private void InicializarBaseDeDados(IApplicationBuilder app)
+
+1.5 Configurar Repositories
+1.6 Configurar IDepartamentoRepository
+1.7 Configurar DepartamentoRepository
+1.8 Configurar DepartamentoController
+
+1.9 
+Configurar Startup
+
+// Registrando Interface Repository
+services.AddScoped<IDepartamentoRepository, DepartamentoRepository>();
+
+//NewtonsoftJson

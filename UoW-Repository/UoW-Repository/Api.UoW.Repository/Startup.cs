@@ -1,4 +1,6 @@
 using Api.UoW.Repository.Data;
+using Api.UoW.Repository.Data.Repositories;
+using Api.UoW.Repository.Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,9 +29,15 @@ namespace Api.UoW.Repository
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            //NewtonsoftJson
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>{
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                });
             //Registrando Contexto
             services.AddDbContext<ApplicationContext>(p=>p.UseSqlServer("Server=(localdb)\\mssqllocaldb; Database=UoW; Integrated Security=true"));
+            // Registrando Interface Repository
+            services.AddScoped<IDepartamentoRepository, DepartamentoRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +48,7 @@ namespace Api.UoW.Repository
                 app.UseDeveloperExceptionPage();
             }
 
+            InicializarBaseDeDados(app);
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -51,5 +60,30 @@ namespace Api.UoW.Repository
                 endpoints.MapControllers();
             });
         }
+        private void InicializarBaseDeDados(IApplicationBuilder app)
+        {
+            using var db = app
+                .ApplicationServices
+                .CreateScope()
+                .ServiceProvider
+                .GetRequiredService<ApplicationContext>();
+
+            if (db.Database.EnsureCreated())
+            {
+                db.Departamentos.AddRange(Enumerable.Range(1, 10)
+                    .Select(p => new Departamento
+                    {
+                        Descricao = $"Departamento - {p}",
+                        Colaboradores = Enumerable.Range(1, 10)
+                            .Select(x => new Colaborador
+                            {
+                                Nome = $"Colaborador: {x}/{p}"
+                            }).ToList()
+                    }));
+
+                db.SaveChanges();
+            }
+        }
     }
 }
+
