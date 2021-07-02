@@ -1,0 +1,9 @@
+﻿Projeto Api
+
+1.0 Microsoft.EntityFrameWorkCore.SqlServer version 5.0.4
+1.1 Configurar Dominio
+1.2 Configurar ApplicationContext
+1.3 Configurar Startup
+//Registrando Contexto
+services.AddDbContext<ApplicationContext>(p=>
+p.UseSqlServer("Server=(localdb)\\mssqllocaldb; Database=UoW; Integrated Security=true"));
