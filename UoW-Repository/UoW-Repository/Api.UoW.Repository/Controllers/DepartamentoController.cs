@@ -42,12 +42,25 @@ namespace Api.UoW.Repository.Controllers
         }
 
         [HttpPost]
-        public  IActionResult CreateDepartamento(Departamento departamento)//[FromSe]IDepartamentoRepository repository
+        public  IActionResult CreateDepartamentoAsync(Departamento departamento)//[FromSe]IDepartamentoRepository repository
         {
             //_departamentoRepository.Add(departamento);
             _uow.DepartamentoRepository.Add(departamento);
             //var saved = _departamentoRepository.Save();
             _uow.Commit();
+            return Ok(departamento);
+        }
+
+        //departamento/1
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> RemoveDepartamentoAsync(int id)
+        {
+            var departamento = await _uow.DepartamentoRepository.GetByIdAsync(id);
+
+            _uow.DepartamentoRepository.Remove(departamento);
+
+            _uow.Commit();
+
             return Ok(departamento);
         }
     }

@@ -16,6 +16,7 @@ namespace Api.UoW.Repository.Data
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationContext _context;
+
         public UnitOfWork(ApplicationContext context)
         {
             _context = context;
@@ -26,6 +27,7 @@ namespace Api.UoW.Repository.Data
         {
             get => _departamentoRepository ?? (_departamentoRepository = new DepartamentoRepository(_context));
         }
+
         public bool Commit()
         {
             return _context.SaveChanges() > 0;
@@ -37,3 +39,5 @@ namespace Api.UoW.Repository.Data
         }
     }
 }
+
+
