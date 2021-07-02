@@ -30,9 +30,9 @@ namespace Api.UoW.Repository.Data.Repositories
                         
         }
 
-        public bool Save()
-        {
-            return _context.SaveChanges() > 0;
-        }
+        //public bool Save()
+        //{
+        //    return _context.SaveChanges() > 0;
+        //}
     }
 }

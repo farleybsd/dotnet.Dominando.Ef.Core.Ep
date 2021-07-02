@@ -44,6 +44,7 @@ namespace Api.UoW.Repository
             services.AddDbContext<ApplicationContext>(p=>p.UseSqlServer("Server=(localdb)\\mssqllocaldb; Database=UoW; Integrated Security=true"));
             // Registrando Interface Repository
             services.AddScoped<IDepartamentoRepository, DepartamentoRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

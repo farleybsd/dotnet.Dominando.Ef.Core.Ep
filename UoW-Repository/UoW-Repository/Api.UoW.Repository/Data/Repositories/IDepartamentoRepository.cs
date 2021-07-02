@@ -10,6 +10,6 @@ namespace Api.UoW.Repository.Data.Repositories
     {
         Task<Departamento> GetByIdAsync(int id);
         void Add(Departamento departamento);
-        bool Save();
+        //bool Save();
     }
 }
