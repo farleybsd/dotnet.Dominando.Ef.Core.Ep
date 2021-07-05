@@ -12,7 +12,26 @@ namespace EF.CORE.DICASETRUQUES
         static void Main(string[] args)
         {
             //ToQueryString();
-            DebugView();
+            //DebugView();
+            ClearContext();
+        }
+        static void ClearContext()
+        {
+            using var db = new ApplicationContext();
+
+            
+
+
+            db.Departamentos.Add(new Departamento
+            {
+                Descricao = "Teste - DebugView "
+
+            });
+
+
+            db.ChangeTracker.Clear(); // redefinir o estado do contexto
+
+            Console.ReadKey();
         }
         static void DebugView()
         {
