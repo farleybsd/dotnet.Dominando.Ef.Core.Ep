@@ -17,7 +17,17 @@ namespace EF.CORE.DICASETRUQUES
             //ConsultaFiltrada();
             //SingleOrDefaultVsFirstOrDefault();
             //SemChavePrimaria();
-            ToView();
+            //ToView();
+            NaoUnicode();
+            Console.ReadKey();
+        }
+        static void NaoUnicode()
+        {
+            using var db = new ApplicationContext();
+
+            var sql = db.Database.GenerateCreateScript();
+
+            Console.WriteLine(sql);
         }
         static void ToView()
         {

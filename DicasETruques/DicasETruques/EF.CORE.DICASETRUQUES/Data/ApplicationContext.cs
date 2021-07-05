@@ -35,6 +35,19 @@ namespace EF.CORE.DICASETRUQUES.Data
                     e.Property(p => p.Departamento).HasColumnName("Descricao");
                 }
             );
+
+            // colocar string como varchar
+            var properties = modelBuilder.Model.GetEntityTypes()
+               .SelectMany(p => p.GetProperties())
+               .Where(p => p.ClrType == typeof(string)
+                       && p.GetColumnType() == null);
+
+            foreach (var property in properties)
+            {
+                property.SetIsUnicode(false);
+            }
+
+            //modelBuilder.ToSnakeCaseNames();
         }
     }
 }
