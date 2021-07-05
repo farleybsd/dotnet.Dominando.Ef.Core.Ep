@@ -10,6 +10,7 @@ namespace EF.CORE.DICASETRUQUES.Domain
     {
         public int Id { get; set; }
         public string Descricao { get; set; }
+        public string Nome { get; set; }
         public int DepartamentoId { get; set; }
         public Departamento Departamento { get; set; }
     }
