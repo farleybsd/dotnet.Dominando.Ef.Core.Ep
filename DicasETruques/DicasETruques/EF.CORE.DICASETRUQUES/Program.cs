@@ -18,8 +18,26 @@ namespace EF.CORE.DICASETRUQUES
             //SingleOrDefaultVsFirstOrDefault();
             //SemChavePrimaria();
             //ToView();
-            NaoUnicode();
+            //NaoUnicode();
+            OperadoresDeAgregacaoNoAgrupamento();
             Console.ReadKey();
+        }
+        static void OperadoresDeAgregacaoNoAgrupamento()
+        {
+            using var db = new ApplicationContext();
+
+            var sql = db.Departamentos
+                        .GroupBy(p => p.Descricao)
+                        .Select(p => new
+                        {
+                            Descricao = p.Key,
+                            Contador = p.Count(),
+                            Media = p.Average(p=> p.Id),
+                            Maximo = p.Max(p=>p.Id),
+                            Soma= p.Sum(p => p.Id)
+                        }).ToQueryString();
+
+            Console.WriteLine(sql);
         }
         static void NaoUnicode()
         {
