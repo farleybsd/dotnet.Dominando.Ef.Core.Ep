@@ -1,0 +1,2 @@
+﻿ Instalacoes 
+ Microsoft.EntityFrameWorkCore.SqlServer version 5.0.4
