@@ -1,5 +1,6 @@
 ﻿using EF.CORE.DICASETRUQUES.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace EF.CORE.DICASETRUQUES.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data source=(localdb)\\mssqllocaldb; Initial Catalog=Tips;Integrated Security=true;pooling=true;")
+            .LogTo(Console.WriteLine,LogLevel.Information)
             .EnableSensitiveDataLogging();
 
         }
