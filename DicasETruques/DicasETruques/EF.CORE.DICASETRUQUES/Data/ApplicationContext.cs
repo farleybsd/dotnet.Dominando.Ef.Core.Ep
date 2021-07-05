@@ -13,6 +13,7 @@ namespace EF.CORE.DICASETRUQUES.Data
     {
         public DbSet<Departamento> Departamentos { get; set; }
         public DbSet<Colaborador> Colaboradores { get; set; }
+        public DbSet<UsuarioFuncao> UsuarioFuncoes { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data source=(localdb)\\mssqllocaldb; Initial Catalog=Tips;Integrated Security=true;pooling=true;")

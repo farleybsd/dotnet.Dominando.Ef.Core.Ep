@@ -15,7 +15,18 @@ namespace EF.CORE.DICASETRUQUES
             //DebugView();
             //ClearContext();
             //ConsultaFiltrada();
-            SingleOrDefaultVsFirstOrDefault();
+            //SingleOrDefaultVsFirstOrDefault();
+            SemChavePrimaria();
+        }
+        static void SemChavePrimaria()
+        {
+            using var db = new ApplicationContext();
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
+            var UsuarioFuncao = db.UsuarioFuncoes
+                                  .Where(p => p.UsuarioId == Guid.NewGuid())
+                                  .ToArray();
         }
         static void SingleOrDefaultVsFirstOrDefault()
         {
