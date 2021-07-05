@@ -20,16 +20,42 @@ namespace EF.CORE.DICASETRUQUES
             //ToView();
             //NaoUnicode();
             //OperadoresDeAgregacao();
-            OperadoresDeAgregacaoNoAgrupamento();
+            //OperadoresDeAgregacaoNoAgrupamento();
+            ContadorDeEventos();
             Console.ReadKey();
         }
+        static void ContadorDeEventos()
+        {
+            using var db = new ApplicationContext();
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
+            Console.WriteLine($" PID: {System.Diagnostics.Process.GetCurrentProcess().Id}");
+
+            while (Console.ReadKey().Key != ConsoleKey.Escape)
+            {
+                var departamento = new Departamento
+                {
+                    Descricao = $"Departamento Sem Colaborador"
+                };
+
+                db.Departamentos.Add(departamento);
+                db.SaveChanges();
+
+                _ = db.Departamentos.Find(1);
+                _ = db.Departamentos.AsNoTracking().FirstOrDefault();
+            }
+
+        }
+
+
         static void OperadoresDeAgregacaoNoAgrupamento()
         {
             using var db = new ApplicationContext();
 
             var sql = db.Departamentos
                         .GroupBy(p => p.Descricao)
-                        .Where(p=> p.Count() > 1)
+                        .Where(p => p.Count() > 1)
                         .Select(p => new
                         {
                             Descricao = p.Key,
@@ -48,9 +74,9 @@ namespace EF.CORE.DICASETRUQUES
                         {
                             Descricao = p.Key,
                             Contador = p.Count(),
-                            Media = p.Average(p=> p.Id),
-                            Maximo = p.Max(p=>p.Id),
-                            Soma= p.Sum(p => p.Id)
+                            Media = p.Average(p => p.Id),
+                            Maximo = p.Max(p => p.Id),
+                            Soma = p.Sum(p => p.Id)
                         }).ToQueryString();
 
             Console.WriteLine(sql);
@@ -81,8 +107,8 @@ namespace EF.CORE.DICASETRUQUES
                 .Select(p => new Departamento
                 {
                     Descricao = $"Departamento {p}",
-                    colaboradores=Enumerable.Range(1,p)
-                    .Select(c=> new Colaborador
+                    colaboradores = Enumerable.Range(1, p)
+                    .Select(c => new Colaborador
                     {
                         Nome = $"Colaborador {p}-{c}"
                     }).ToList()

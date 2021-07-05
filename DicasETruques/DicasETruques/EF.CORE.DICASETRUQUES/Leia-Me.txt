@@ -1,2 +1,7 @@
 ﻿ Instalacoes 
  Microsoft.EntityFrameWorkCore.SqlServer version 5.0.4
+
+Contadores de eventos
+dotnet tool install --global dotnet-counters
+
+dotnet counters monitor -p 13804 --counters Microsoft.EntityFrameWorkCore   --numero do pid
