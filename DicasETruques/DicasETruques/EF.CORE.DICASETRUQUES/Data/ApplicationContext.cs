@@ -1,4 +1,5 @@
 ﻿using EF.CORE.DICASETRUQUES.Domain;
+using EF.CORE.DICASETRUQUES.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -47,7 +48,8 @@ namespace EF.CORE.DICASETRUQUES.Data
                 property.SetIsUnicode(false);
             }
 
-            //modelBuilder.ToSnakeCaseNames();
+            // SnakeCase
+            modelBuilder.ToSnakeCaseNames();
         }
     }
 }
