@@ -19,10 +19,26 @@ namespace EF.CORE.DICASETRUQUES
             //SemChavePrimaria();
             //ToView();
             //NaoUnicode();
+            //OperadoresDeAgregacao();
             OperadoresDeAgregacaoNoAgrupamento();
             Console.ReadKey();
         }
         static void OperadoresDeAgregacaoNoAgrupamento()
+        {
+            using var db = new ApplicationContext();
+
+            var sql = db.Departamentos
+                        .GroupBy(p => p.Descricao)
+                        .Where(p=> p.Count() > 1)
+                        .Select(p => new
+                        {
+                            Descricao = p.Key,
+                            Contador = p.Count(),
+                        }).ToQueryString();
+
+            Console.WriteLine(sql);
+        }
+        static void OperadoresDeAgregacao()
         {
             using var db = new ApplicationContext();
 
