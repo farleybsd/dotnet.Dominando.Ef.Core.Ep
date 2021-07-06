@@ -2,3 +2,4 @@
 
 Microsoft.EntityFrameWorkCore.InMemory version 5.0.5
 Microsoft.EntityFrameWorkCore.SqLite version 5.0.5
+Microsoft.EntityFrameWorkCore.SqLServer version 5.0.5
