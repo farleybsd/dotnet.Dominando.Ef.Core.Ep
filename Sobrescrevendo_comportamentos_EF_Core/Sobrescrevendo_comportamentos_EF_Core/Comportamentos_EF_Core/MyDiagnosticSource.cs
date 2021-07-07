@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Diagnostics;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -38,6 +40,30 @@ namespace Comportamentos_EF_Core
                 }
             }
             
+        }
+    }
+
+    public class MyInterceptorListener : IObserver<DiagnosticListener>
+    {
+
+        private readonly MyInterceptor _interceptor = new MyInterceptor();
+        public void OnCompleted()
+        {
+
+        }
+
+        public void OnError(Exception error)
+        {
+
+        }
+
+        public void OnNext(DiagnosticListener listener)
+        {
+            if (listener.Name == DbLoggerCategory.Name)
+            {
+                listener.Subscribe(_interceptor);
+            }
+
         }
     }
 }
