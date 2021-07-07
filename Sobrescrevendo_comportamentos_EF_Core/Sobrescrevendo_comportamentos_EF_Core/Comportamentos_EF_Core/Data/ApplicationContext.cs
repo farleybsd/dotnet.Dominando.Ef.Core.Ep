@@ -16,9 +16,9 @@ namespace Comportamentos_EF_Core.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-                    .LogTo(Console.WriteLine)
+                    //.LogTo(Console.WriteLine)
                     .UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=sobrescrevendo_comportamento; Integrated Security=true")
-                    .ReplaceService<IQuerySqlGeneratorFactory, MySqlServerQuerySqlGeneratorFactory>()
+                    //.ReplaceService<IQuerySqlGeneratorFactory, MySqlServerQuerySqlGeneratorFactory>()
                     .EnableSensitiveDataLogging();
         }
     }
