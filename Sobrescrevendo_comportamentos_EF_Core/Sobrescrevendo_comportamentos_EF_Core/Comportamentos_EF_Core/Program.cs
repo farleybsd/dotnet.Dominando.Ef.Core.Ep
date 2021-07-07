@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Comportamentos_EF_Core.Data;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace Comportamentos_EF_Core
 {
@@ -6,7 +9,13 @@ namespace Comportamentos_EF_Core
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            using var db = new ApplicationContext();
+            db.Database.EnsureCreated();
+
+            var sql = db.Departamentos.Where(p => p.Id > 0).ToQueryString();
+
+            Console.WriteLine(sql);
+            Console.ReadKey();
         }
     }
 }

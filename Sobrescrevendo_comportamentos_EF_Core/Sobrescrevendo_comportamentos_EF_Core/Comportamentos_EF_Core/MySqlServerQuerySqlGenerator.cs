@@ -17,9 +17,9 @@ namespace Comportamentos_EF_Core
 
         }
 
-        protected override Expression VisitTableValuedFunction(TableValuedFunctionExpression tableValuedFunctionExpression)
+        protected override Expression VisitTable(TableExpression tableExpression)
         {
-            var table = base.VisitTableValuedFunction(tableValuedFunctionExpression);
+            var table = base.VisitTable(tableExpression);
             Sql.Append("WITH (NOLOCK)");
             return table;
         }
