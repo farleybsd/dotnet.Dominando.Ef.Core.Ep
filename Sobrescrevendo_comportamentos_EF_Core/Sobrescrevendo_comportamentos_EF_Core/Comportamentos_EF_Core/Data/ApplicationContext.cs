@@ -1,5 +1,6 @@
 ﻿using Comportamentos_EF_Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace Comportamentos_EF_Core.Data
             optionsBuilder
                     .LogTo(Console.WriteLine)
                     .UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=sobrescrevendo_comportamento; Integrated Security=true")
+                    .ReplaceService<IQuerySqlGeneratorFactory, MySqlServerQuerySqlGeneratorFactory>()
                     .EnableSensitiveDataLogging();
         }
     }

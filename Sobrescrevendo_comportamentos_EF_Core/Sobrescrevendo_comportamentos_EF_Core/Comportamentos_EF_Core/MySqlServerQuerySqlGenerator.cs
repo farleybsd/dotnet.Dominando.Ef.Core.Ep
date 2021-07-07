@@ -24,4 +24,18 @@ namespace Comportamentos_EF_Core
             return table;
         }
     }
+
+    public class MySqlServerQuerySqlGeneratorFactory : SqlServerQuerySqlGeneratorFactory
+    {
+        private readonly QuerySqlGeneratorDependencies _dependencies;
+        public MySqlServerQuerySqlGeneratorFactory(QuerySqlGeneratorDependencies dependencies) :base(dependencies)
+        {
+            _dependencies = dependencies;
+        }
+
+        public override QuerySqlGenerator Create()
+        {
+            return new MySqlServerQuerySqlGenerator(_dependencies);
+        }
+    }
 }
